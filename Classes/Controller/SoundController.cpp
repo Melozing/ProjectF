@@ -1,5 +1,7 @@
 #include "SoundController.h"
 #include "audio/include/AudioEngine.h"
+#include "Constants/Constants.h"
+#include "cocos2d.h"
 
 USING_NS_CC;
 using namespace cocos2d::experimental;
@@ -9,14 +11,10 @@ SoundController* SoundController::instance = nullptr;
 SoundController* SoundController::getInstance() {
     if (instance == nullptr) {
         instance = new SoundController();
+        instance->musicVolume = 1.0f;
+        instance->effectsVolume = 1.0f;
     }
     return instance;
-}
-
-SoundController::SoundController() : elapsedTime(0.0f), currentEventIndex(0) {
-    Director::getInstance()->getScheduler()->schedule([this](float dt) {
-        this->update(dt);
-        }, this, 0.0f, false, "sound_controller_update_key");
 }
 
 void SoundController::preloadMusic(const std::string& filePath) {
@@ -24,8 +22,10 @@ void SoundController::preloadMusic(const std::string& filePath) {
 }
 
 int SoundController::playMusic(const std::string& filePath, bool loop) {
+    Constants::currentSoundTrackPath = filePath;
     stopMusic(filePath);
     int audioId = AudioEngine::play2d(filePath, loop);
+    AudioEngine::setVolume(audioId, musicVolume);
     playingMusic[filePath] = audioId;
     return audioId;
 }
@@ -59,13 +59,11 @@ float SoundController::getMusicDuration(const std::string& filePath) {
     return 0.0f;
 }
 
-void SoundController::scheduleSpawnEvents(const std::vector<float>& timestamps, const std::vector<std::function<void()>>& spawnFunctions) {
-    spawnEvents.clear();
-    for (size_t i = 0; i < timestamps.size(); ++i) {
-        spawnEvents.emplace_back(timestamps[i], spawnFunctions[i]);
+void SoundController::setMusicVolume(float volume) {
+    musicVolume = volume;
+    for (const auto& music : playingMusic) {
+        AudioEngine::setVolume(music.second, volume);
     }
-    currentEventIndex = 0;
-    elapsedTime = 0.0f;
 }
 
 void SoundController::setMusicVolume(const std::string& filePath, float volume) {
@@ -94,10 +92,52 @@ void SoundController::replayMusic(const std::string& filePath) {
     playMusic(filePath);
 }
 
-void SoundController::update(float dt) {
-    elapsedTime += dt;
-    while (currentEventIndex < spawnEvents.size() && elapsedTime >= spawnEvents[currentEventIndex].first) {
-        spawnEvents[currentEventIndex].second();
-        currentEventIndex++;
+void SoundController::preloadSoundEffect(const std::string& filePath) {
+    AudioEngine::preload(filePath);
+}
+
+int SoundController::playSoundEffect(const std::string& filePath, bool loop) {
+    int audioId = AudioEngine::play2d(filePath, loop, effectsVolume);
+    playingSoundEffects[audioId] = filePath;
+    return audioId;
+}
+
+void SoundController::stopSoundEffect(int audioId) {
+    AudioEngine::stop(audioId);
+    playingSoundEffects.erase(audioId);
+}
+
+void SoundController::stopAllSoundEffects() {
+    for (const auto& effect : playingSoundEffects) {
+        AudioEngine::stop(effect.first);
     }
+    playingSoundEffects.clear();
+}
+
+void SoundController::setEffectsVolume(float volume) {
+    effectsVolume = volume;
+    for (const auto& effect : playingSoundEffects) {
+        AudioEngine::setVolume(effect.first, volume);
+    }
+}
+
+void SoundController::pauseAllSoundEffects() {
+    for (const auto& effect : playingSoundEffects) {
+        AudioEngine::pause(effect.first);
+    }
+}
+
+void SoundController::resumeAllSoundEffects() {
+    for (const auto& effect : playingSoundEffects) {
+        AudioEngine::resume(effect.first);
+    }
+}
+
+void SoundController::scheduleSpawnEvents(const std::vector<float>& timestamps, const std::vector<std::function<void()>>& spawnFunctions) {
+    spawnEvents.clear();
+    for (size_t i = 0; i < timestamps.size(); ++i) {
+        spawnEvents.emplace_back(timestamps[i], spawnFunctions[i]);
+    }
+    currentEventIndex = 0;
+    elapsedTime = 0.0f;
 }

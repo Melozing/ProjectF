@@ -29,6 +29,4 @@ private:
     cocos2d::Sprite* explosionSpriteDump;
     PhysicsBody* explosionBody;
 };
-
-
 #endif // __RANDOM_BOOM_H__

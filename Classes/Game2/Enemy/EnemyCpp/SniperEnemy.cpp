@@ -2,7 +2,7 @@
 #include "Constants/Constants.h"
 #include "utils/MathFunction.h"
 #include "Game2/Player/PlayerGame2.h"
-#include "Bullet/Bullet.h"
+#include "Bullet/BulletPlayerGame3.h"
 #include "Game2/Enemy/EnemyUtils.h"
 
 USING_NS_CC;

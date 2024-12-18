@@ -22,8 +22,6 @@ bool FlyingBullet::init() {
     if (!Sprite::init()) {
         return false;
     }
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/enemies/flying_bullet.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/enemies/flying_bullet_left.plist");
 
     spriteBatchNodeLeft = SpriteBatchNode::create("assets_game/enemies/flying_bullet_left.png");
     spriteBatchNodeRight = SpriteBatchNode::create("assets_game/enemies/flying_bullet.png");
@@ -74,6 +72,5 @@ void FlyingBullet::update(float delta) {
 }
 
 FlyingBullet::~FlyingBullet() {
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("assets_game/enemies/flying_bullet.plist");
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("assets_game/enemies/flying_bullet_left.plist");
+    
 }

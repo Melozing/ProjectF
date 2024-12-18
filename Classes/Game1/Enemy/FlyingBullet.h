@@ -12,7 +12,6 @@ public:
     void spawn(const cocos2d::Vec2& startPosition);
     virtual void update(float delta) override;
 
-    float getSpeed() const { return _speed; }
     void initAnimation(bool fromLeft);
     Size GetSize();
     void reset();

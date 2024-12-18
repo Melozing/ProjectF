@@ -1,12 +1,11 @@
 ﻿#include "EnemyPlaneBullet.h"
-#include "EnemyPlaneBulletPool.h"
-#include "BulletForEnemyPlanePool.h"
+#include "Manager/ObjectPoolGame3.h"
 #include "utils/PhysicsShapeCache.h"
 #include "Constants/Constants.h"
 
 USING_NS_CC;
 
-EnemyPlaneBullet* EnemyPlaneBullet::createEnemyBullet() {
+EnemyPlaneBullet* EnemyPlaneBullet::create() {
     EnemyPlaneBullet* enemy = new (std::nothrow) EnemyPlaneBullet();
     if (enemy && enemy->init()) {
         enemy->autorelease();
@@ -21,22 +20,16 @@ bool EnemyPlaneBullet::init() {
         return false;
     }
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/enemies/EnemyPlaneBullet.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/fx/explosions.plist");
-
     initAnimation();
-    createPhysicsBody();
 
-    // Initialize explosion batch node
-    explosionBatchNode = SpriteBatchNode::create("assets_game/fx/explosions.png");
-    this->addChild(explosionBatchNode);
+    // Initialize explosion
 
     // Initialize warning sign
     warningSign = Sprite::create("assets_game/enemies/WarningSignBulletPlane.png");
     warningSign->setScale(SpriteController::updateSpriteScale(modelCharac, 0.02f));
     warningSign->setVisible(false);
     this->addChild(warningSign);
-
+    reset();
     return true;
 }
 
@@ -59,10 +52,12 @@ void EnemyPlaneBullet::initAnimation() {
     modelCharac->runAction(RepeatForever::create(animateCharac));
 }
 
-void EnemyPlaneBullet::spawnEnemy(cocos2d::Node* parent) {
-    auto enemy = EnemyPlaneBulletPool::getInstance()->getEnemy();
+void EnemyPlaneBullet::spawnEnemy(cocos2d::Node* parent, float skillTime, bool spawnWithSkill) {
+    auto enemy = EnemyPlaneBulletPool::getInstance()->getObject();
     if (enemy) {
+        enemy->createPhysicsBody();
         enemy->resetSprite();
+        enemy->setVisible(true);
         parent->addChild(enemy);
         auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -81,10 +76,12 @@ void EnemyPlaneBullet::spawnEnemy(cocos2d::Node* parent) {
             enemy->moveFromRightToLeft(visibleSize, Constants::EnemyPlaneBulletGame3Speed);
         }
 
-        // Schedule to show warning sign and spawn bullets
-        enemy->scheduleOnce([enemy](float) {
-            enemy->showWarningSign();
-            }, 2.0f, "show_warning_sign_key");
+        if (spawnWithSkill) {
+            // Schedule to show warning sign and spawn bullets
+            enemy->scheduleOnce([enemy](float) {
+                enemy->showWarningSign();
+                }, skillTime, "show_warning_sign_key");
+        }
     }
 }
 
@@ -114,7 +111,7 @@ void EnemyPlaneBullet::spawnBullets() {
 
     for (int i = 0; i < 3; ++i) {
         this->scheduleOnce([this, i, movingFromLeft](float) {
-            auto bullet = BulletForEnemyPlanePool::getInstance()->getBullet();
+            auto bullet = BulletForEnemyPlanePool::getInstance()->getObject();
             if (bullet) {
                 bullet->setPosition(this->getPosition());
                 if (bullet->getParent() == nullptr) {
@@ -126,39 +123,6 @@ void EnemyPlaneBullet::spawnBullets() {
             }
             }, i * 0.3f, "spawn_bullet_key_" + std::to_string(i));
     }
-}
-
-void EnemyPlaneBullet::reset() {
-    modelCharac->setVisible(true);
-    this->setPosition(Vec2::ZERO);
-    this->stopAllActions();
-    createPhysicsBody();
-}
-
-void EnemyPlaneBullet::explode() {
-    this->removeComponent(this->getPhysicsBody());
-
-    if (!explosionSprite) {
-        explosionSprite = Sprite::createWithSpriteFrameName("explosions7.png");
-        explosionSprite->setScale(SpriteController::updateSpriteScale(explosionSprite, 0.078f));
-        explosionBatchNode->addChild(explosionSprite);
-    }
-
-    explosionSprite->setPosition(modelCharac->getPosition());
-    modelCharac->setVisible(false);
-    explosionSprite->setVisible(true);
-
-    auto explosionAnimation = SpriteController::createAnimation("explosions", 10, 0.041f);
-    auto animate = Animate::create(explosionAnimation);
-
-    explosionSprite->runAction(Sequence::create(
-        animate,
-        CallFunc::create([this]() {
-            explosionSprite->setVisible(false);
-            this->returnToPool();
-            }),
-        nullptr
-    ));
 }
 
 void EnemyPlaneBullet::createPhysicsBody() {
@@ -173,7 +137,7 @@ void EnemyPlaneBullet::createPhysicsBody() {
     auto scaledSize = this->GetSize();
 
     auto physicsBody = physicsCache->createBody("EnemyPlaneBullet", originalSize, scaledSize);
-    physicsCache->resizeBody(physicsBody, "EnemyPlaneBullet", originalSize, 0.5f);
+    physicsCache->resizeBody(physicsBody, "EnemyPlaneBullet", originalSize, 0.2f);
     if (physicsBody) {
         physicsBody->setContactTestBitmask(true);
         physicsBody->setDynamic(false);
@@ -181,4 +145,14 @@ void EnemyPlaneBullet::createPhysicsBody() {
 
         this->setPhysicsBody(physicsBody);
     }
+}
+
+void EnemyPlaneBullet::returnToPool() {
+    this->stopAllActions();
+    this->unschedule("show_warning_sign_key");
+    this->unschedule("spawn_bullets_key");
+    this->setVisible(false);
+    this->removeFromParentAndCleanup(false);
+    this->reset();
+    EnemyPlaneBulletPool::getInstance()->returnObject(this);
 }

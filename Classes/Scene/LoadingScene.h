@@ -23,6 +23,7 @@ private:
     void initLoadingBar();
     void initBackground();
     void initCursor();
+    void preloadAssets(); // Add this line
 
     Cursor* _cursor;
     ui::LoadingBar* loadingBar;

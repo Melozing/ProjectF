@@ -8,25 +8,18 @@
 
 class FallingRock : public FallingObject {
 public:
-    enum class SpriteType {
-        ROCK,
-        LANDMINE
-    };
-
     static FallingRock* create();
 
     virtual bool init() override;
+    void initAnimation() override;
     Size GetSize();
     void spawn(const cocos2d::Vec2& startPosition);
     void reset();
-    void initAnimation() override;
+    void initSprite();
+    void createPhysicsBody();
 private:
     void returnToPool();
-    cocos2d::SpriteBatchNode* _spriteBatchNodeRock;
-    cocos2d::SpriteBatchNode* _spriteBatchNodeLandmine;
     cocos2d::Sprite* _currentSprite;
-
-    SpriteType _spriteType;
 };
 
 #endif // __FALLING_ROCK_H__

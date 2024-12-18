@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>pre_explosion1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,520},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{257,260},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{257,130},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{257,0},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{257,390},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,390},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,260},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,130},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>pre_explosion9.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{514,650}</string>
+			<key>textureFileName</key>
+			<string>pre_explosion.png</string>
+			</dict>
+		</dict>
+</plist>

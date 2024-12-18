@@ -3,6 +3,7 @@
 #include "Scene/LoadingScene.h"
 #include "Controller/SpriteController.h"
 #include "Controller/GameController.h"
+#include "Controller/SoundController.h"
 #include "Manager/BackgroundManager.h"
 
 USING_NS_CC;
@@ -15,6 +16,10 @@ bool MainMenu::init() {
     if (!Scene::init()) {
         return false; // Ensure initialization is successful
     }
+
+    // Set Sound
+    Constants::currentSoundTrackPath = Constants::MainMenuTrackPath;
+    SoundController::getInstance()->playMusic(Constants::MainMenuTrackPath, true);
 
     // Set background
     BackgroundManager::getInstance()->setBackgroundWithOverlay(this, "assets_game/UXUI/Background/DienBienPhuVictory.jpg");
@@ -34,6 +39,8 @@ bool MainMenu::init() {
     button->setPosition(Vec2(visibleSize.width / 2, buttonY));
     button->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
+            SoundController::getInstance()->stopMusic(Constants::currentSoundTrackPath);
+            SoundController::getInstance()->playSoundEffect(Constants::ClickStartGameSFX);
             startLoading(Constants::GAME1_SCENE_NAME); // Start loading when button is pressed
         }
         });
@@ -45,6 +52,8 @@ bool MainMenu::init() {
     buttonG2->setPosition(Vec2(visibleSize.width / 2, buttonG2Y));
     buttonG2->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
+            SoundController::getInstance()->stopMusic(Constants::currentSoundTrackPath);
+            SoundController::getInstance()->playSoundEffect(Constants::ClickStartGameSFX);
             startLoading(Constants::GAME2_SCENE_NAME); // Start loading when button is pressed
         }
         });
@@ -56,6 +65,8 @@ bool MainMenu::init() {
     buttonG3->setPosition(Vec2(visibleSize.width / 2, buttonG3Y));
     buttonG3->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
+            SoundController::getInstance()->stopMusic(Constants::currentSoundTrackPath);
+            SoundController::getInstance()->playSoundEffect(Constants::ClickStartGameSFX);
             startLoading(Constants::GAME3_SCENE_NAME); // Start loading when button is pressed
         }
         });
@@ -67,6 +78,8 @@ bool MainMenu::init() {
     exitButton->setPosition(Vec2(visibleSize.width / 2, exitButton->getContentSize().height / 2 + 10)); // Position at the bottom
     exitButton->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
+            SoundController::getInstance()->stopMusic(Constants::currentSoundTrackPath);
+            SoundController::getInstance()->playSoundEffect(Constants::ButtonClickSFX);
             Director::getInstance()->end(); // Exit the game
         }
         });

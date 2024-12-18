@@ -3,11 +3,12 @@
 #include "Constants/Constants.h"
 #include "utils/MathFunction.h"
 #include "cocos2d.h"
-
-
 #include "Grenade/Grenade.h"
 #include "Grenade/BulletGame2.h"
 #include "Grenade/PoolBulletGame2.h"
+
+
+#include "Controller/SoundController.h"
 
 USING_NS_CC;
 
@@ -18,17 +19,27 @@ PlayerGame2::PlayerGame2()
     _isThrowingGrenade(false),
     playerMovement(nullptr),
     bulletPool(30),
-    totalAmmo(initialAmmo),
-    currentMagazine(maxMagazineSize),
+    attributes(new PlayerAttributes(100, 130)),
     isReloading(false),
     reloadTime(2.0f),
-	_health(100)
+    currentFireMode(FireMode::SINGLE),
+    burstCooldown(0.0f),
+    isAutoFiring(false)
 {
+    totalAmmo = attributes->GetAmmo();
+    currentMagazine = maxMagazineSize;
+    currentGrenades = maxGrenades;
+
+    SoundController::getInstance()->preloadMusic("assets_game/sounds/Game2/reload.mp3");
+    SoundController::getInstance()->preloadMusic("assets_game/sounds/Game2/shot.mp3");
+    SoundController::getInstance()->preloadMusic("assets_game/sounds/Game2/nembom.mp3");
 }
+
 
 PlayerGame2::~PlayerGame2()
 {
     delete playerMovement;
+	delete attributes;
 }
 
 PlayerGame2* PlayerGame2::createPlayerGame2()
@@ -54,11 +65,6 @@ bool PlayerGame2::init() {
     this->setScale(Constants::PlayerScale);
     this->setAnchorPoint(Vec2(0.5, 0.5));
 
-    /*auto physicsBody = PhysicsBody::createBox(this->getContentSize());
-    physicsBody->setContactTestBitmask(true);
-    physicsBody->setGravityEnable(false);
-    this->setPhysicsBody(physicsBody);*/
-
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseMove = CC_CALLBACK_1(PlayerGame2::onMouseMove, this);
     mouseListener->onMouseDown = CC_CALLBACK_1(PlayerGame2::onMouseDown, this);
@@ -72,11 +78,10 @@ bool PlayerGame2::init() {
 
     this->scheduleUpdate();
 
-    //bulletManager = new BulletManager(100, "assets_game/player/ball.png");
-    playerMovement = new PlayerMovement(this, Constants::PlayerSpeed); // Properly initialize PlayerMovement
+    playerMovement = new PlayerMovement(this, Constants::PlayerSpeed);
     
-    _ammoLabel = Label::createWithTTF("0/0", "fonts/Marker Felt.ttf", 24);
-    _ammoLabel->setPosition(Vec2(this->getContentSize().width / 2, -100)); // Đặt vị trí của label phía sau lưng người chơi
+    _ammoLabel = Label::createWithTTF("0/0", Constants::FONT_GAME, 24);
+    _ammoLabel->setPosition(Vec2(this->getContentSize().width / 2, -100)); 
     this->addChild(_ammoLabel, 1);
 
 
@@ -86,7 +91,7 @@ bool PlayerGame2::init() {
 	_reloadSprite->setScale(0.5f);
     this->addChild(_reloadSprite, 1);
     updateAmmoDisplay();
-
+    createPhysicsBody();
     return true;
 }
 
@@ -135,6 +140,16 @@ void PlayerGame2::onMouseDown(Event* event)
         _isMouseDown = true;
         _mousePressDuration = 0.0f;
         _isThrowingGrenade = false;
+
+        if (currentFireMode == FireMode::AUTO) {
+            isAutoFiring = true;
+            this->schedule([this](float) {
+                auto mousePos = Director::getInstance()->convertToGL(_mousePos);
+                Vec2 pos = this->getPosition();
+                Vec2 dirToShoot = mousePos - pos;
+                shootBullet(dirToShoot);
+                }, 0.1f, "auto_fire_key");
+        }
     }
     else if (e->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT)
     {
@@ -155,17 +170,40 @@ void PlayerGame2::onMouseUp(Event* event)
 
         if (_isThrowingGrenade && e->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT)
         {
-            throwGrenade(dirToShoot, _mousePressDuration);
+            if (currentGrenades > 0) {
+                throwGrenade(dirToShoot, _mousePressDuration);
+                currentGrenades--;
+            }
         }
         else if (!_isThrowingGrenade && e->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
         {
-            shootBullet(dirToShoot);
+            switch (currentFireMode) {
+            case FireMode::SINGLE:
+                if (currentMagazine > 0) {
+                    shootBullet(dirToShoot);
+                }
+                else {
+                    reload();
+                }
+                break;
+            case FireMode::AUTO:
+                isAutoFiring = false;
+                this->unschedule("auto_fire_key");
+                break;
+            case FireMode::BURST:
+                if (currentMagazine >= 3) {
+                    fireBurst();
+                }
+                else {
+                    reload();
+                }
+                break;
+            }
         }
 
         _isMouseDown = false;
     }
 }
-
 
 void PlayerGame2::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
@@ -179,6 +217,10 @@ void PlayerGame2::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     else if (keyCode == EventKeyboard::KeyCode::KEY_R)
     {
         reload();
+    }
+    else if (keyCode == EventKeyboard::KeyCode::KEY_B)
+    {
+        switchFireMode();
     }
 }
 
@@ -233,6 +275,44 @@ void PlayerGame2::update(float delta)
             updateAmmoDisplay();
         }
     }
+
+    if (currentFireMode == FireMode::BURST && burstCooldown > 0.0f) {
+        burstCooldown -= delta;
+    }
+}
+
+void PlayerGame2::switchFireMode()
+{
+    switch (currentFireMode) {
+    case FireMode::SINGLE:
+        currentFireMode = FireMode::AUTO;
+        break;
+    case FireMode::AUTO:
+        currentFireMode = FireMode::BURST;
+        break;
+    case FireMode::BURST:
+        currentFireMode = FireMode::SINGLE;
+        break;
+    }
+}
+
+void PlayerGame2::fireBurst()
+{
+    if (burstCooldown > 0.0f) {
+        return;
+    }
+
+    auto mousePos = Director::getInstance()->convertToGL(_mousePos);
+    Vec2 pos = this->getPosition();
+    Vec2 dirToShoot = mousePos - pos;
+
+    for (int i = 0; i < 3; ++i) {
+        this->scheduleOnce([this, dirToShoot](float) {
+            shootBullet(dirToShoot);
+            }, i * 0.1f, "burst_fire_key_" + std::to_string(i));
+    }
+
+    burstCooldown = 1.5f;
 }
 
 void PlayerGame2::RotateToMouse()
@@ -249,7 +329,8 @@ void PlayerGame2::shootBullet(const Vec2& direction)
 {
     if (isReloading || currentMagazine <= 0)
     {
-        return; // Cannot shoot while reloading or if the magazine is empty
+        reload();
+        return;
     }
 
     Vec2 normalizedDirection = direction.getNormalized();
@@ -257,53 +338,87 @@ void PlayerGame2::shootBullet(const Vec2& direction)
     if (bullet)
     {
         this->getParent()->addChild(bullet);
+        playShootSound();
     }
-
     currentMagazine--;
-    updateAmmoDisplay(); // Update ammo display after shooting
+    updateAmmoDisplay();
 }
-
-
-
 
 void PlayerGame2::throwGrenade(const Vec2& direction, float duration)
 {
     auto grenade = Grenade::createGrenade(this->getPosition(), direction, duration);
     this->getParent()->addChild(grenade);
+	playGrenadeSound();
 }
 
-void PlayerGame2::die()
-{
-    this->removeFromParent();
-}
 void PlayerGame2::reload()
 {
     if (isReloading || currentMagazine == maxMagazineSize || totalAmmo == 0)
     {
-        return; // Already reloading, magazine is full, or no ammo left
+        return;
     }
 
     isReloading = true;
+    playReloadSound();
     reloadTime = 2.0f; // Start reload time
     _reloadSprite->setVisible(true);
 
     auto rotateAction = RotateBy::create(1.0f, 360.0f);
     _reloadSprite->runAction(RepeatForever::create(rotateAction));
+    playReloadSound();
 }
-void PlayerGame2::updateAmmoDisplay()
+
+void PlayerGame2::takeDamage(int damage)
 {
-    if (_ammoLabel)
+    attributes->TakeDamage(damage);
+    if (attributes->IsDead())
     {
-        _ammoLabel->setString(StringUtils::format("%d/%d", currentMagazine, totalAmmo));
-    }
-}
-void PlayerGame2::takeDamage(int damage) {
-    // Implement the logic for taking damage
-    // For example, reduce the player's health
-    // If health reaches 0, call the die() method
-    // Assuming you have a health member variable
-    _health -= damage;
-    if (_health <= 0) {
         die();
     }
+}
+void PlayerGame2::die()
+{
+    //animation cho nay
+}
+
+void PlayerGame2::pickUpHealth(int healthAmount)
+{
+    attributes->IncreaseHealth(healthAmount);
+}
+void PlayerGame2::pickUpAmmo(int ammoAmount)
+{
+    attributes->SetAmmo(attributes->GetAmmo() + ammoAmount);
+    updateAmmoDisplay();
+}
+void PlayerGame2::pickUpGrenade(int grenadeAmount)
+{
+    currentGrenades = std::min(currentGrenades + grenadeAmount, maxGrenades);
+}
+
+void PlayerGame2::updateAmmoDisplay()
+{
+    _ammoLabel->setString(StringUtils::format("%d/%d", currentMagazine, totalAmmo));
+}
+
+void PlayerGame2::createPhysicsBody() {
+    if (this->getPhysicsBody() != nullptr) {
+        this->removeComponent(this->getPhysicsBody());
+    }
+    auto physicsBody = PhysicsBody::createBox(this->getContentSize());
+    physicsBody->setDynamic(true);
+    physicsBody->setGravityEnable(false);
+    physicsBody->setCategoryBitmask(0x01); // Category bitmask for player
+    physicsBody->setCollisionBitmask(0x04); // Collides with items
+    physicsBody->setContactTestBitmask(0x04); // Test contact with items
+    this->addComponent(physicsBody);
+}
+void PlayerGame2::playReloadSound() {
+    SoundController::getInstance()->playSoundEffect("assets_game/sounds/Game2/reload.mp3");
+}
+
+void PlayerGame2::playShootSound() {
+    SoundController::getInstance()->playSoundEffect("assets_game/sounds/Game2/shot.mp3");
+}
+void PlayerGame2::playGrenadeSound() {
+    SoundController::getInstance()->playSoundEffect("assets_game/sounds/Game2/nembom.mp3");
 }

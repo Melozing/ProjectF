@@ -3,6 +3,7 @@
 #include "Constants/Constants.h"
 #include "cocos2d.h"
 #include "Controller/SpriteController.h"
+#include "utils/PhysicsShapeCache.h"
 
 USING_NS_CC;
 
@@ -35,8 +36,22 @@ bool PlayerGame1::init()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     playerMovement = new PlayerMovement(this, Constants::PLAYER_MOVESPEED, minX, maxX, minY, maxY);
+    playerMovement->setEnabled(true);
     this->schedule(CC_SCHEDULE_SELECTOR(PlayerGame1::updateShieldPosition), 0.0001f);
+
     return true;
+}
+
+void PlayerGame1::removePhysicsBody() {
+    if (this->getPhysicsBody()) {
+        this->removeComponent(this->getPhysicsBody());
+    }
+}
+
+void PlayerGame1::disableMovement() {
+    if (playerMovement) {
+        playerMovement->setEnabled(false);
+    }
 }
 
 void PlayerGame1::takeDamage()
@@ -88,8 +103,6 @@ PlayerGame1* PlayerGame1::createPlayer()
 
 void PlayerGame1::initAnimation()
 {
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/player/Canon.plist");
-
     auto spriteBatchNode = SpriteBatchNode::create("assets_game/player/Canon.png");
     this->addChild(spriteBatchNode);
 
@@ -98,7 +111,7 @@ void PlayerGame1::initAnimation()
 
     spriteBatchNode->addChild(modelCharac);
 
-    auto animateCharac = Animate::create(createAnimation("Canon", 15, 0.07f));
+    auto animateCharac = Animate::create(createAnimation("Canon", 33, 0.017f));
     modelCharac->runAction(RepeatForever::create(animateCharac));
 }
 
@@ -156,4 +169,36 @@ void PlayerGame1::playHealthIncreaseEffect() {
         nullptr
     );
     modelCharac->runAction(sequence);
+}
+
+void PlayerGame1::fadeOutAndDisable() {
+    modelCharac->runAction(Sequence::create(
+        CallFunc::create([this]() {
+            this->disableMovement();
+            }),
+        FadeOut::create(1.0f),
+        CallFunc::create([this]() {
+            this->setVisible(false);
+            }),
+        nullptr
+    ));
+}
+
+void PlayerGame1::createPhysicsBody() {
+    if (this->getPhysicsBody() != nullptr) {
+        this->removeComponent(this->getPhysicsBody());
+    }
+
+    auto physicsCache = PhysicsShapeCache::getInstance();
+    auto originalSize = modelCharac->getTexture()->getContentSize();
+    auto scaledSize = this->GetSize();
+
+    auto physicsBody = physicsCache->createBodyFromPlist("physicsBody/PlayerGame1.plist", "PlayerGame1", originalSize, scaledSize);
+    physicsCache->resizeBody(physicsBody, "PlayerGame1", originalSize, 1.35f);
+
+    if (physicsBody) {
+        physicsBody->setContactTestBitmask(true);
+        physicsBody->setCollisionBitmask(0x01);
+        this->setPhysicsBody(physicsBody);
+    }
 }

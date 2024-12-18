@@ -13,7 +13,6 @@ bool FallingObject::init() {
 void FallingObject::spawn(const Vec2& startPosition) {
     this->setPosition(startPosition);
     this->setVisible(true);
-    initAnimation();
 
     Vec2 endPosition = Vec2(startPosition.x, -SpriteController::calculateScreenRatio(Constants::FALLINGROCK_ITEMS_OFFSET));
     float distance = startPosition.distance(endPosition);
@@ -29,7 +28,6 @@ void FallingObject::spawn(const Vec2& startPosition) {
 
 void FallingObject::reset() {
     this->setVisible(false);
-    this->stopAllActions();
     this->removeFromParentAndCleanup(false);
 }
 

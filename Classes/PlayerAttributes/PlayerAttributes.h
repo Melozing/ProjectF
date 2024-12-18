@@ -7,14 +7,12 @@ private:
     int health;  // Player's health
     int ammo;    // Player's ammo
 
-    // Private constructor to prevent instantiation
-    PlayerAttributes(int initialHealth, int initialAmmo);
 
 public:
     // Delete copy constructor and assignment operator
     PlayerAttributes(const PlayerAttributes&) = delete;
     PlayerAttributes& operator=(const PlayerAttributes&) = delete;
-
+    PlayerAttributes(int initialHealth, int initialAmmo);
     // Static method to get the singleton instance
     static PlayerAttributes& getInstance();
 

@@ -20,6 +20,7 @@ public:
     void resizeBody(cocos2d::PhysicsBody* physicsBody, const std::string& shapeName, const cocos2d::Size& originalSize, float scaleFactor);
     // Clear all loaded shapes
     void clear();
+    cocos2d::PhysicsBody* createBodyFromPlist(const std::string& plist, const std::string& shapeName, const cocos2d::Size& originalSize, const cocos2d::Size& scaledSize);
 
 private:
     PhysicsShapeCache() = default;

@@ -16,14 +16,18 @@ HealthPlayerGame1* HealthPlayerGame1::createHealth()
 }
 
 void HealthPlayerGame1::initHealthSprites(int health) {
-    auto visibleSize = Director::getInstance()->getVisibleSize(); // Get the visible size of the window
     for (int i = 0; i < health; i++) { // Loop for player health sprites
-        auto healthSprite = Sprite::create("assets_game/player/HP_Dot.png"); // Load health sprite
-        healthSprite->setScale(SpriteController::updateSpriteScale(healthSprite, 0.1f));
-        healthSprite->setPosition(Vec2(SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_X_START) + i * SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_X), visibleSize.height - SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_Y))); // Set position for each health sprite
-        this->addChild(healthSprite); // Add sprite to the scene
-        _healthSprites.push_back(healthSprite); // Store sprite in vector
+        modelBackground = Sprite::create("assets_game/player/HP_Dot_BG.png"); // Load background sprite
+        modelBackground->setScale(SpriteController::updateSpriteScale(modelBackground, 0.105f));
+        this->addChild(modelBackground); // Add background sprite to the scene
+        _backgroundSprites.push_back(modelBackground); // Store background sprite in vector
+
+        modelHealth = Sprite::create("assets_game/player/HP_Dot.png"); // Load health sprite
+        modelHealth->setScale(SpriteController::updateSpriteScale(modelHealth, 0.1f));
+        this->addChild(modelHealth); // Add health sprite to the scene
+        _healthSprites.push_back(modelHealth); // Store health sprite in vector
     }
+    positionHealthSprites();
 }
 
 void HealthPlayerGame1::updateHealthSprites(int health) {
@@ -32,13 +36,16 @@ void HealthPlayerGame1::updateHealthSprites(int health) {
     // Ensure the number of health sprites matches the current health
     if (currentHealth > _healthSprites.size()) {
         int additionalSprites = currentHealth - _healthSprites.size();
-        auto visibleSize = Director::getInstance()->getVisibleSize();
         for (int i = 0; i < additionalSprites; ++i) {
-            auto healthSprite = Sprite::create("assets_game/player/HP_Dot.png");
-            healthSprite->setScale(SpriteController::updateSpriteScale(healthSprite, 0.1f));
-            healthSprite->setPosition(Vec2(SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_X_START) + (_healthSprites.size() + i) * SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_X), visibleSize.height - SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_Y)));
-            this->addChild(healthSprite);
-            _healthSprites.push_back(healthSprite);
+            modelBackground = Sprite::create("assets_game/player/HP_Dot_BG.png");
+            modelBackground->setScale(SpriteController::updateSpriteScale(modelBackground, 0.105f));
+            this->addChild(modelBackground);
+            _backgroundSprites.push_back(modelBackground);
+
+            modelHealth = Sprite::create("assets_game/player/HP_Dot.png");
+            modelHealth->setScale(SpriteController::updateSpriteScale(modelHealth, 0.1f));
+            this->addChild(modelHealth);
+            _healthSprites.push_back(modelHealth);
         }
     }
 
@@ -56,5 +63,19 @@ void HealthPlayerGame1::updateHealthSprites(int health) {
             auto sequence = Sequence::create(fadeOut, hideSprite, nullptr); // Create sequence
             _healthSprites[i]->runAction(sequence); // Run fade out action
         }
+    }
+    positionHealthSprites();
+}
+
+void HealthPlayerGame1::positionHealthSprites() {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    float startX = SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_X_START);
+    float startY = visibleSize.height - SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_Y);
+    float spacing = SpriteController::calculateScreenRatio(Constants::PLAYER_HEALTH_PADDING_X);
+
+    for (int i = 0; i < _healthSprites.size(); ++i) {
+        auto spriteSize = SpriteController::GetContentSizeSprite(_healthSprites[i]);
+        _backgroundSprites[i]->setPosition(Vec2(startX + i * (spriteSize.width + spacing), startY));
+        _healthSprites[i]->setPosition(Vec2(startX + i * (spriteSize.width + spacing), startY));
     }
 }

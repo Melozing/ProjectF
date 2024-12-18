@@ -7,15 +7,15 @@
 
 class EnemyPlaneBoom : public EnemyPlaneBase {
 public:
-    static EnemyPlaneBoom* createEnemyPlaneBoom();
-    void reset();
+    static EnemyPlaneBoom* create();
     virtual bool init() override;
     Size GetSize();
-    static void spawnEnemy(cocos2d::Node* parent);
+    static void spawnEnemy(cocos2d::Node* parent, float skillTime, bool spawnWithSkill);
     void initAnimation();
-    void explode();
     void createPhysicsBody();
     void spawnBoom(bool spawnFromLeft);
+    virtual void returnToPool() override;
+
 private:
     cocos2d::SpriteBatchNode* spriteBatchNode;
     cocos2d::SpriteBatchNode* explosionBatchNode;

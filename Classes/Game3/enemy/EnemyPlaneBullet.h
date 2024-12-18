@@ -6,15 +6,14 @@
 
 class EnemyPlaneBullet : public EnemyPlaneBase {
 public:
-    static EnemyPlaneBullet* createEnemyBullet();
-    void reset();
+    static EnemyPlaneBullet* create();
     virtual bool init() override;
     Size GetSize();
-    static void spawnEnemy(cocos2d::Node* parent);
+    static void spawnEnemy(cocos2d::Node* parent, float skillTime, bool spawnWithSkill);
     void initAnimation();
-    void explode();
     void createPhysicsBody();
     void spawnBullets();
+    virtual void returnToPool() override;
 private:
     cocos2d::SpriteBatchNode* spriteBatchNode;
     cocos2d::SpriteBatchNode* explosionBatchNode;
@@ -23,6 +22,5 @@ private:
     void showWarningSign();
     void hideWarningSign();
 };
-
 
 #endif

@@ -12,12 +12,11 @@ public:
     void update(float delta) override;
     void removeWhenOutOfScreen();
     cocos2d::Size GetSize();
-    ~FanBullet();
 
 private:
     bool init() override;
     void initAnimation();
-
+    void createPhysicsBody();
     cocos2d::Vec2 _direction;
     float _speed = 500.0f;
     cocos2d::SpriteBatchNode* spriteBatchNode = nullptr;

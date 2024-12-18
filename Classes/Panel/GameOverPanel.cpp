@@ -28,7 +28,7 @@ bool GameOverPanel::init(const std::function<void()>& retryAction, const std::fu
     // Create retry button
     auto retryButton = ui::Button::create("assets_game/UXUI/Panel/Replay_BTN.png", "assets_game/UXUI/Panel/Replay_BTN_Active.png");
     retryButton->setAnchorPoint(Vec2(0.5f, 0.5f));
-    retryButton->setPosition(Vec2(boardSprite->getContentSize().width / 2 + retryButton->getContentSize().width + SpriteController::calculateScreenRatio(Constants::PADDING_HORIZONTAL_UI_PANEL) / 2,
+    retryButton->setPosition(Vec2(boardSprite->getContentSize().width / 2 + SpriteController::calculateScreenRatio(0.04f),
         retryButton->getContentSize().height / 2 + SpriteController::calculateScreenRatio(Constants::PADDING_VERTICAL_UI_PANEL)));
     retryButton->addClickEventListener([retryAction](Ref* sender) {
         retryAction();
@@ -38,7 +38,7 @@ bool GameOverPanel::init(const std::function<void()>& retryAction, const std::fu
     // Create back button
     auto backButton = ui::Button::create("assets_game/UXUI/Panel/Back_BTN.png", "assets_game/UXUI/Panel/Back_BTN_Active.png");
     backButton->setAnchorPoint(Vec2(0.5f, 0.5f));
-    backButton->setPosition(Vec2(boardSprite->getContentSize().width / 2,
+    backButton->setPosition(Vec2(retryButton->getPosition().x - backButton->getContentSize().width - SpriteController::calculateScreenRatio(Constants::PADDING_HORIZONTAL_UI_PANEL_BUTTON),
         backButton->getContentSize().height / 2 + SpriteController::calculateScreenRatio(Constants::PADDING_VERTICAL_UI_PANEL)));
     backButton->addClickEventListener([backAction](Ref* sender) {
         backAction();
@@ -46,14 +46,11 @@ bool GameOverPanel::init(const std::function<void()>& retryAction, const std::fu
     boardSprite->addChild(backButton);
 
     // Create exit button
-    cocos2d::ui::Button* exitButton2 = ui::Button::create("assets_game/UXUI/Panel/Exit_BTN.png", "assets_game/UXUI/Panel/Exit_BTN.png");
-    exitButton2->setAnchorPoint(Vec2(0.5f, 0.5f));
-    exitButton2->setPosition(Vec2(boardSprite->getContentSize().width / 2,
-        boardSprite->getContentSize().height - exitButton2->getContentSize().height / 2 - SpriteController::calculateScreenRatio(Constants::PADDING_VERTICAL_UI_EXITBUTTON)));
-    exitButton2->addClickEventListener([exitAction](Ref* sender) {
-        exitAction();
-        });
-    boardSprite->addChild(exitButton2);
+    auto exitButton = cocos2d::Sprite::create("assets_game/UXUI/Panel/Close_BTN.png");
+    exitButton->setPosition(Vec2(boardSprite->getContentSize().width - exitButton->getContentSize().width / 2 + SpriteController::calculateScreenRatio(Constants::PADDING_HORIZONTAL_UI_EXIT_BUTTON),
+        boardSprite->getContentSize().height - exitButton->getContentSize().height / 2 + SpriteController::calculateScreenRatio(Constants::PADDING_VERTICAL_UI_EXITBUTTON)));
+    boardSprite->addChild(exitButton);
 
+    this->addTitleLabel("Game Over");
     return true;
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>EnemyPlaneBoss1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,209},{560,208}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{560,208}}</string>
+				<key>sourceSize</key>
+				<string>{560,208}</string>
+			</dict>
+
+			<key>EnemyPlaneBoss2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,418},{560,208}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{560,208}}</string>
+				<key>sourceSize</key>
+				<string>{560,208}</string>
+			</dict>
+
+			<key>EnemyPlaneBoss3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{560,208}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{560,208}}</string>
+				<key>sourceSize</key>
+				<string>{560,208}</string>
+			</dict>
+
+			<key>EnemyPlaneBoss4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,418},{560,208}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{560,208}}</string>
+				<key>sourceSize</key>
+				<string>{560,208}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{561,627}</string>
+			<key>textureFileName</key>
+			<string>EnemyPlaneBoss.png</string>
+			</dict>
+		</dict>
+</plist>

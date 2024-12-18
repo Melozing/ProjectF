@@ -1,5 +1,7 @@
 #include "AppDelegate.h"
 #include "Scene/MainMenuScene.h"
+#include "Constants/Constants.h"
+#include "Controller/SoundController.h"
 #include "Controller/GameController.h"
 
 // #define USE_AUDIO_ENGINE 1
@@ -11,82 +13,56 @@ using namespace cocos2d::experimental;
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(800, 600);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(800, 600);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
+// Design resolution size with 16:9 aspect ratio (Full HD as default)
+static cocos2d::Size designResolutionSize = cocos2d::Size(1280, 720);
 
-AppDelegate::AppDelegate()
-{
-}
+AppDelegate::AppDelegate() {}
 
-AppDelegate::~AppDelegate()
-{
+AppDelegate::~AppDelegate() {
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
 #endif
 }
 
-void AppDelegate::initGLContextAttrs()
-{
+void AppDelegate::initGLContextAttrs() {
     GLContextAttrs glContextAttrs = { 8, 8, 8, 8, 24, 8, 0 };
     GLView::setGLContextAttrs(glContextAttrs);
 }
 
-static int register_all_packages()
-{
+static int register_all_packages() {
     return 0; //flag for packages manager
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+    // Initialize Director and GLView
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if (!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-        glview = GLViewImpl::createWithRect("FinalBattleField", Rect(0, 0, screenWidth, screenHeight));
-
-        // Windows specific code to make the window borderless
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        HWND hwnd = glview->getWin32Window();
-        LONG style = GetWindowLong(hwnd, GWL_STYLE);
-        style &= ~(WS_CAPTION | WS_THICKFRAME);
-        SetWindowLong(hwnd, GWL_STYLE, style);
-
-        LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-        exStyle &= ~(WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
-        SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
-
-        // Adjust window size and position to match the screen size
-        SetWindowPos(hwnd, NULL, 0, 0, screenWidth, screenHeight, SWP_FRAMECHANGED | SWP_NOZORDER | SWP_NOOWNERZORDER);
-#endif
-
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        // Mac specific code to make the window borderless
-        // Replace with actual code to make the window borderless on Mac
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        // Linux specific code to make the window borderless
-        // Replace with actual code to make the window borderless on Linux
+        // Create a window with 16:9 aspect ratio (Full HD)
+        //glview = GLViewImpl::createWithFullScreen("FinalBattleField");
+        glview = GLViewImpl::createWithRect("FinalBattleField", Rect(100, 100, 1280, 720));
 #else
         glview = GLViewImpl::create("FinalBattleField");
 #endif
         director->setOpenGLView(glview);
     }
 
-    glview->setCursorVisible(true);
+    // Set the design resolution size to 16:9
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+
     director->setDisplayStats(true);
-    director->setAnimationInterval(1.0f / 120);
+    director->setAnimationInterval(1.0f / 60);
 
-    // Set the design resolution size to match the screen size
-    int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-    int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-    glview->setDesignResolutionSize(screenWidth, screenHeight, ResolutionPolicy::NO_BORDER);
-
+    // Register packages
     register_all_packages();
 
+    // Initialize GameController and load MainMenuScene
     GameController::getInstance();
     GameController::getInstance()->init();
+
+    SoundController::getInstance()->setEffectsVolume(UserDefault::getInstance()->getFloatForKey(Constants::UD_effectsVolume.c_str()));
+    SoundController::getInstance()->setMusicVolume(UserDefault::getInstance()->getFloatForKey(Constants::UD_musicVolume.c_str()));
 
     auto scene = MainMenu::createScene();
     director->runWithScene(scene);
@@ -96,7 +72,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
-
 #if USE_AUDIO_ENGINE
     AudioEngine::pauseAll();
 #endif
@@ -104,7 +79,6 @@ void AppDelegate::applicationDidEnterBackground() {
 
 void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
-
 #if USE_AUDIO_ENGINE
     AudioEngine::resumeAll();
 #endif

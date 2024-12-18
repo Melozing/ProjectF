@@ -1,4 +1,5 @@
 [
+  { "spawnTime": 0.50003, "enemyType": "FallingRock" },
   { "spawnTime": 0.50003, "enemyType": "Effect" },
   { "spawnTime": 0.50003, "enemyType": "Effect" },
 
@@ -153,22 +154,17 @@
   { "spawnTime": 36.27, "enemyType": "FallingRock" },
 
   { "spawnTime": 36.27, "enemyType": "Effect" },
-  { "spawnTime": 36.27, "enemyType": "RandomBoom" },
 
   { "spawnTime": 37.21, "enemyType": "Effect" },
   { "spawnTime": 37.21, "enemyType": "FallingRock" },
 
   { "spawnTime": 37.21, "enemyType": "Effect" },
-  { "spawnTime": 37.21, "enemyType": "RandomBoom" },
 
   { "spawnTime": 37.81, "enemyType": "Effect" },
-  { "spawnTime": 37.81, "enemyType": "FallingRock" },
 
   { "spawnTime": 37.81, "enemyType": "Effect" },
-  { "spawnTime": 37.81, "enemyType": "RandomBoom" },
 
   { "spawnTime": 37.95, "enemyType": "Effect" },
-  { "spawnTime": 37.95, "enemyType": "FallingRock" },
 
   { "spawnTime": 37.95, "enemyType": "Effect" },
   { "spawnTime": 38.11, "enemyType": "Effect" },
@@ -1567,10 +1563,5 @@
 
   { "spawnTime": 141.10001, "enemyType": "FanBullet" },
   { "spawnTime": 141.10002, "enemyType": "FanBullet" },
-  { "spawnTime": 141.10003, "enemyType": "FanBullet" },
-
-  { "spawnTime": 300.2, "enemyType": "Effect" },
-  { "spawnTime": 300.2, "enemyType": "Effect" },
-
-  { "spawnTime": 300.2, "enemyType": "FanBullet" }
+  { "spawnTime": 141.10003, "enemyType": "FanBullet" }
 ]

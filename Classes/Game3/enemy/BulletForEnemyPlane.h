@@ -5,7 +5,7 @@
 
 class BulletForEnemyPlane : public cocos2d::Sprite {
 public:
-    static BulletForEnemyPlane* createBullet();
+    static BulletForEnemyPlane* create();
     void reset();
     virtual bool init() override;
     void moveDown(float angle);

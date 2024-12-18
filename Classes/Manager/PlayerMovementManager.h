@@ -19,10 +19,11 @@ public:
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode);
     void update(float delta);
     float getSpeed() const;
+    void setEnabled(bool enabled);
 
 private:
     void updateDirection();
-
+    bool _enabled = true;
     cocos2d::Node* _player;
     float _speed;
     cocos2d::Vec2 _direction;

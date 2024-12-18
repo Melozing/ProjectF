@@ -5,7 +5,7 @@
 
 class BoomForEnemyPlane : public cocos2d::Sprite {
 public:
-    static BoomForEnemyPlane* createBoom();
+    static BoomForEnemyPlane* create();
     void reset();
     virtual bool init() override;
     void moveDown(bool spawnFromLeft);

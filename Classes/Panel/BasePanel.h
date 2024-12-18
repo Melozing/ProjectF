@@ -7,6 +7,8 @@
 class BasePanel : public cocos2d::Layer {
 public:
     virtual bool init() override;
+    void addTitleLabel(const std::string& titleText);
+
 protected:
     Cursor* _cursor;
     cocos2d::Sprite* boardSprite;

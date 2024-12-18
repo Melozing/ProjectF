@@ -4,60 +4,200 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>landmine1.png</key>
+			<key>landmine0.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,715},{799,714}}</string>
+				<string>{{257,130},{256,129}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{799,714}}</string>
+				<string>{{0,0},{256,129}}</string>
 				<key>sourceSize</key>
-				<string>{799,714}</string>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{514,260},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine10.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,390},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine11.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,260},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine12.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,130},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine13.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
 			</dict>
 
 			<key>landmine2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{800,0},{799,714}}</string>
+				<string>{{514,130},{256,129}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{799,714}}</string>
+				<string>{{0,0},{256,129}}</string>
 				<key>sourceSize</key>
-				<string>{799,714}</string>
+				<string>{256,129}</string>
 			</dict>
 
 			<key>landmine3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{800,715},{799,714}}</string>
+				<string>{{514,0},{256,129}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{799,714}}</string>
+				<string>{{0,0},{256,129}}</string>
 				<key>sourceSize</key>
-				<string>{799,714}</string>
+				<string>{256,129}</string>
 			</dict>
 
 			<key>landmine4.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{799,714}}</string>
+				<string>{{257,520},{256,129}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{799,714}}</string>
+				<string>{{0,0},{256,129}}</string>
 				<key>sourceSize</key>
-				<string>{799,714}</string>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{257,390},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{257,260},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{514,390},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{257,0},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
+			</dict>
+
+			<key>landmine9.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,520},{256,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{256,129}}</string>
+				<key>sourceSize</key>
+				<string>{256,129}</string>
 			</dict>
 
 		</dict>
@@ -67,7 +207,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{2048,2048}</string>
+			<string>{771,650}</string>
 			<key>textureFileName</key>
 			<string>landmine.png</string>
 			</dict>

@@ -7,85 +7,701 @@
 			<key>warning_rocket1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{351,1409},{350,352}}</string>
+				<string>{{453,399},{150,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{350,352}}</string>
+				<string>{{0,0},{150,128}}</string>
 				<key>sourceSize</key>
-				<string>{350,352}</string>
+				<string>{150,128}</string>
+			</dict>
+
+			<key>warning_rocket10.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{755,523},{150,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,129}}</string>
+				<key>sourceSize</key>
+				<string>{150,129}</string>
+			</dict>
+
+			<key>warning_rocket11.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{755,393},{150,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,129}}</string>
+				<key>sourceSize</key>
+				<string>{150,129}</string>
+			</dict>
+
+			<key>warning_rocket12.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{755,262},{150,130}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,130}}</string>
+				<key>sourceSize</key>
+				<string>{150,130}</string>
+			</dict>
+
+			<key>warning_rocket13.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{755,131},{150,130}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,130}}</string>
+				<key>sourceSize</key>
+				<string>{150,130}</string>
+			</dict>
+
+			<key>warning_rocket14.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{755,0},{150,130}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,130}}</string>
+				<key>sourceSize</key>
+				<string>{150,130}</string>
+			</dict>
+
+			<key>warning_rocket15.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{604,791},{150,130}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,130}}</string>
+				<key>sourceSize</key>
+				<string>{150,130}</string>
+			</dict>
+
+			<key>warning_rocket16.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{604,660},{150,130}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,130}}</string>
+				<key>sourceSize</key>
+				<string>{150,130}</string>
+			</dict>
+
+			<key>warning_rocket17.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{604,528},{150,131}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,131}}</string>
+				<key>sourceSize</key>
+				<string>{150,131}</string>
+			</dict>
+
+			<key>warning_rocket18.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{604,396},{150,131}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,131}}</string>
+				<key>sourceSize</key>
+				<string>{150,131}</string>
+			</dict>
+
+			<key>warning_rocket19.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{604,264},{150,131}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,131}}</string>
+				<key>sourceSize</key>
+				<string>{150,131}</string>
 			</dict>
 
 			<key>warning_rocket2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,1409},{350,354}}</string>
+				<string>{{906,646},{150,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{350,354}}</string>
+				<string>{{0,0},{150,128}}</string>
 				<key>sourceSize</key>
-				<string>{350,354}</string>
+				<string>{150,128}</string>
+			</dict>
+
+			<key>warning_rocket20.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{604,132},{150,131}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,131}}</string>
+				<key>sourceSize</key>
+				<string>{150,131}</string>
+			</dict>
+
+			<key>warning_rocket21.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{604,0},{150,131}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,131}}</string>
+				<key>sourceSize</key>
+				<string>{150,131}</string>
+			</dict>
+
+			<key>warning_rocket22.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{453,794},{150,131}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,131}}</string>
+				<key>sourceSize</key>
+				<string>{150,131}</string>
+			</dict>
+
+			<key>warning_rocket23.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{453,661},{150,132}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,132}}</string>
+				<key>sourceSize</key>
+				<string>{150,132}</string>
+			</dict>
+
+			<key>warning_rocket24.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{453,528},{150,132}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,132}}</string>
+				<key>sourceSize</key>
+				<string>{150,132}</string>
+			</dict>
+
+			<key>warning_rocket25.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{906,775},{150,132}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,132}}</string>
+				<key>sourceSize</key>
+				<string>{150,132}</string>
+			</dict>
+
+			<key>warning_rocket26.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{453,266},{150,132}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,132}}</string>
+				<key>sourceSize</key>
+				<string>{150,132}</string>
+			</dict>
+
+			<key>warning_rocket27.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{453,133},{150,132}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,132}}</string>
+				<key>sourceSize</key>
+				<string>{150,132}</string>
+			</dict>
+
+			<key>warning_rocket28.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{453,0},{150,132}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,132}}</string>
+				<key>sourceSize</key>
+				<string>{150,132}</string>
+			</dict>
+
+			<key>warning_rocket29.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{453,0},{150,132}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,132}}</string>
+				<key>sourceSize</key>
+				<string>{150,132}</string>
 			</dict>
 
 			<key>warning_rocket3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,1058},{353,350}}</string>
+				<string>{{906,517},{150,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{353,350}}</string>
+				<string>{{0,0},{150,128}}</string>
 				<key>sourceSize</key>
-				<string>{353,350}</string>
+				<string>{150,128}</string>
+			</dict>
+
+			<key>warning_rocket30.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{302,804},{150,133}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,133}}</string>
+				<key>sourceSize</key>
+				<string>{150,133}</string>
+			</dict>
+
+			<key>warning_rocket31.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{302,670},{150,133}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,133}}</string>
+				<key>sourceSize</key>
+				<string>{150,133}</string>
+			</dict>
+
+			<key>warning_rocket32.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{302,536},{150,133}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,133}}</string>
+				<key>sourceSize</key>
+				<string>{150,133}</string>
+			</dict>
+
+			<key>warning_rocket33.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{302,402},{150,133}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,133}}</string>
+				<key>sourceSize</key>
+				<string>{150,133}</string>
+			</dict>
+
+			<key>warning_rocket34.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{302,268},{150,133}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,133}}</string>
+				<key>sourceSize</key>
+				<string>{150,133}</string>
+			</dict>
+
+			<key>warning_rocket35.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{302,134},{150,133}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,133}}</string>
+				<key>sourceSize</key>
+				<string>{150,133}</string>
+			</dict>
+
+			<key>warning_rocket36.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{302,0},{150,133}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,133}}</string>
+				<key>sourceSize</key>
+				<string>{150,133}</string>
+			</dict>
+
+			<key>warning_rocket37.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{151,811},{150,134}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,134}}</string>
+				<key>sourceSize</key>
+				<string>{150,134}</string>
+			</dict>
+
+			<key>warning_rocket38.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{151,676},{150,134}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,134}}</string>
+				<key>sourceSize</key>
+				<string>{150,134}</string>
+			</dict>
+
+			<key>warning_rocket39.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{151,541},{150,134}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,134}}</string>
+				<key>sourceSize</key>
+				<string>{150,134}</string>
 			</dict>
 
 			<key>warning_rocket4.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{375,350}}</string>
+				<string>{{906,388},{150,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{375,350}}</string>
+				<string>{{0,0},{150,128}}</string>
 				<key>sourceSize</key>
-				<string>{375,350}</string>
+				<string>{150,128}</string>
+			</dict>
+
+			<key>warning_rocket40.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{151,406},{150,134}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,134}}</string>
+				<key>sourceSize</key>
+				<string>{150,134}</string>
+			</dict>
+
+			<key>warning_rocket41.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{151,271},{150,134}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,134}}</string>
+				<key>sourceSize</key>
+				<string>{150,134}</string>
+			</dict>
+
+			<key>warning_rocket42.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{151,136},{150,134}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,134}}</string>
+				<key>sourceSize</key>
+				<string>{150,134}</string>
+			</dict>
+
+			<key>warning_rocket43.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{151,0},{150,135}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,135}}</string>
+				<key>sourceSize</key>
+				<string>{150,135}</string>
+			</dict>
+
+			<key>warning_rocket44.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,819},{150,135}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,135}}</string>
+				<key>sourceSize</key>
+				<string>{150,135}</string>
+			</dict>
+
+			<key>warning_rocket45.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,683},{150,135}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,135}}</string>
+				<key>sourceSize</key>
+				<string>{150,135}</string>
+			</dict>
+
+			<key>warning_rocket46.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,547},{150,135}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,135}}</string>
+				<key>sourceSize</key>
+				<string>{150,135}</string>
+			</dict>
+
+			<key>warning_rocket47.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,411},{150,135}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,135}}</string>
+				<key>sourceSize</key>
+				<string>{150,135}</string>
+			</dict>
+
+			<key>warning_rocket48.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,274},{150,136}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,136}}</string>
+				<key>sourceSize</key>
+				<string>{150,136}</string>
+			</dict>
+
+			<key>warning_rocket49.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,137},{150,136}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,136}}</string>
+				<key>sourceSize</key>
+				<string>{150,136}</string>
 			</dict>
 
 			<key>warning_rocket5.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,351},{368,350}}</string>
+				<string>{{906,259},{150,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{368,350}}</string>
+				<string>{{0,0},{150,128}}</string>
 				<key>sourceSize</key>
-				<string>{368,350}</string>
+				<string>{150,128}</string>
+			</dict>
+
+			<key>warning_rocket50.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{150,136}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,136}}</string>
+				<key>sourceSize</key>
+				<string>{150,136}</string>
 			</dict>
 
 			<key>warning_rocket6.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,702},{368,355}}</string>
+				<string>{{906,130},{150,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{368,355}}</string>
+				<string>{{0,0},{150,128}}</string>
 				<key>sourceSize</key>
-				<string>{368,355}</string>
+				<string>{150,128}</string>
+			</dict>
+
+			<key>warning_rocket7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{906,0},{150,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,129}}</string>
+				<key>sourceSize</key>
+				<string>{150,129}</string>
+			</dict>
+
+			<key>warning_rocket8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{755,783},{150,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,129}}</string>
+				<key>sourceSize</key>
+				<string>{150,129}</string>
+			</dict>
+
+			<key>warning_rocket9.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{755,653},{150,129}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{150,129}}</string>
+				<key>sourceSize</key>
+				<string>{150,129}</string>
 			</dict>
 
 		</dict>
@@ -95,7 +711,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{1024,2048}</string>
+			<string>{2048,1024}</string>
 			<key>textureFileName</key>
 			<string>warning_rocket.png</string>
 			</dict>

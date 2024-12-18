@@ -7,7 +7,6 @@
 #include "Controller/GameController.h"
 #include "Manager/PlayerMovementManager.h"
 #include "Game1/Skills/ShieldSkill.h"
-#include "Game1/Skills/ShieldSkillItemPool.h"
 
 class PlayerGame1 : public cocos2d::Sprite, public SpriteController
 {
@@ -20,6 +19,7 @@ public:
     void takeDamage();
     bool canTakeDamage();
     Size GetSize();
+    void removePhysicsBody();
 
     void playDamageEffect();
     void playHealthIncreaseEffect();
@@ -28,13 +28,11 @@ public:
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void update(float delta);
 
-    float getMinX() const { return minX; }
-    float getMaxX() const { return maxX; }
-    float getMinY() const { return minY; }
-    float getMaxY() const { return maxY; }
     void setShield(ShieldSkill* shield);
     ShieldSkill* _shield;
-    void cleanupShield();
+    void disableMovement();
+    void fadeOutAndDisable();
+    void createPhysicsBody();
 private:
     int _health = 3;
     float minX, maxX, minY, maxY;

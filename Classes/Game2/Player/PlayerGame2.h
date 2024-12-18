@@ -1,16 +1,13 @@
-// PlayerGame2.h
-#pragma once
+﻿#pragma once
 
 #include "cocos2d.h"
-//#include "Bullet/BulletManager.h"
 #include "Controller/SpriteController.h"
 #include "Manager/PlayerMovementManager.h"
-
 #include "Grenade/BulletGame2.h"
-#include "Grenade/PoolBulletGame2.h" 
+#include "Grenade/PoolBulletGame2.h"
+#include "PlayerAttributes/PlayerAttributes.h"
 
-class PlayerGame2 : public cocos2d::Sprite, public SpriteController
-{
+class PlayerGame2 : public cocos2d::Sprite, public SpriteController {
 public:
     PlayerGame2();
     virtual ~PlayerGame2();
@@ -32,11 +29,23 @@ public:
     void reload();
     void takeDamage(int damage);
     void die();
+    void pickUpHealth(int healthAmount);
+    void pickUpAmmo(int ammoAmount);
+    void pickUpGrenade(int grenadeAmount);
 
     const int maxMagazineSize = 30;
     const int initialAmmo = 120;
+    const int maxGrenades = 5; // Giới hạn số lượng lựu đạn
+
+    enum class FireMode { SINGLE, AUTO, BURST };
+    void switchFireMode();
+    void fireBurst();
+
+
+	void playShootSound();
+	void playReloadSound();
+	void playGrenadeSound();
 private:
-    int _health;
     cocos2d::Vec2 _mousePos;
     bool _isMouseDown;
     float _mousePressDuration;
@@ -49,7 +58,15 @@ private:
     int currentMagazine;
     bool isReloading;
     float reloadTime;
-    Label* _ammoLabel;
+    int currentGrenades; // Số lượng lựu đạn hiện tại
+    cocos2d::Label* _ammoLabel;
     void updateAmmoDisplay();
+
+    PlayerAttributes* attributes;
+    void createPhysicsBody();
+
+    FireMode currentFireMode;
+    float burstCooldown;
+    bool isAutoFiring;
 };
 

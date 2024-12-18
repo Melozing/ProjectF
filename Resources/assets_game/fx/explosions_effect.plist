@@ -7,127 +7,85 @@
 			<key>explosions_effect1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{76,947},{41,49}}</string>
+				<string>{{2604,0},{589,818}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{41,49}}</string>
+				<string>{{0,0},{589,818}}</string>
 				<key>sourceSize</key>
-				<string>{41,49}</string>
+				<string>{589,818}</string>
 			</dict>
 
 			<key>explosions_effect2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,943},{75,77}}</string>
+				<string>{{1585,0},{1018,1160}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{75,77}}</string>
+				<string>{{0,0},{1018,1160}}</string>
 				<key>sourceSize</key>
-				<string>{75,77}</string>
+				<string>{1018,1160}</string>
 			</dict>
 
 			<key>explosions_effect3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{224,596},{127,127}}</string>
+				<string>{{1580,1438},{1235,1322}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{127,127}}</string>
+				<string>{{0,0},{1235,1322}}</string>
 				<key>sourceSize</key>
-				<string>{127,127}</string>
+				<string>{1235,1322}</string>
 			</dict>
 
 			<key>explosions_effect4.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{216,791},{214,155}}</string>
+				<string>{{0,0},{1584,1437}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{214,155}}</string>
+				<string>{{0,0},{1584,1437}}</string>
 				<key>sourceSize</key>
-				<string>{214,155}</string>
+				<string>{1584,1437}</string>
 			</dict>
 
 			<key>explosions_effect5.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,596},{223,194}}</string>
+				<string>{{0,1438},{1579,1111}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{223,194}}</string>
+				<string>{{0,0},{1579,1111}}</string>
 				<key>sourceSize</key>
-				<string>{223,194}</string>
+				<string>{1579,1111}</string>
 			</dict>
 
 			<key>explosions_effect6.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,791},{215,151}}</string>
+				<string>{{0,2550},{1100,718}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{215,151}}</string>
+				<string>{{0,0},{1100,718}}</string>
 				<key>sourceSize</key>
-				<string>{215,151}</string>
-			</dict>
-
-			<key>explosions_effect7.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{0,0},{285,214}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{285,214}}</string>
-				<key>sourceSize</key>
-				<string>{285,214}</string>
-			</dict>
-
-			<key>explosions_effect8.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{0,215},{284,210}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{284,210}}</string>
-				<key>sourceSize</key>
-				<string>{284,210}</string>
-			</dict>
-
-			<key>explosions_effect9.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{0,426},{246,169}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,0},{246,169}}</string>
-				<key>sourceSize</key>
-				<string>{246,169}</string>
+				<string>{1100,718}</string>
 			</dict>
 
 		</dict>
@@ -137,7 +95,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{512,1024}</string>
+			<string>{3194,3269}</string>
 			<key>textureFileName</key>
 			<string>explosions_effect.png</string>
 			</dict>

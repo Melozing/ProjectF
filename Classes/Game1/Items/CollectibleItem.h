@@ -15,11 +15,13 @@ public:
     virtual cocos2d::Size getScaledSize() const;
     virtual void playEffectAndRemove(); 
     virtual void returnToPool(); 
+    virtual void initAnimation();
+    virtual void initPhysicsBody();
 protected:
     cocos2d::Sprite* _currentSprite;
+    cocos2d::SpriteBatchNode* spriteBatchNode = nullptr;
     float _speed = Constants::FALLINGROCK_ITEMS_SPEED; 
     float _spriteScale;
-    float _scaleFactor; // Default scale factor
 };
 
 #endif // __COLLECTIBLE_ITEM_H__

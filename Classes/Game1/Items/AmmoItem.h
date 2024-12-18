@@ -13,9 +13,10 @@ public:
     virtual void returnToPool() override;
     virtual void playEffectAndRemove() override;
     void reset();
-    void initAnimation();
+    virtual void initAnimation() override;
+    virtual void initPhysicsBody() override;
+
 private:
-	void initPhysicsBody(); 
 	void RemovePhysicBody();
 };
 

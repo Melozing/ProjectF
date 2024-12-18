@@ -1,12 +1,15 @@
 #include "BoomForEnemyPlane.h"
-#include "BoomForEnemyPlanePool.h"
+#include "Manager/ObjectPoolGame3.h"
 #include "utils/PhysicsShapeCache.h"
 #include "Controller/SpriteController.h"
+#include "Controller/SoundController.h"
+#include "Constants/Constants.h"
+#include "FX/Explodable.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
 
-BoomForEnemyPlane* BoomForEnemyPlane::createBoom() {
+BoomForEnemyPlane* BoomForEnemyPlane::create() {
     BoomForEnemyPlane* boom = new (std::nothrow) BoomForEnemyPlane();
     if (boom && boom->init()) {
         boom->autorelease();
@@ -20,8 +23,6 @@ bool BoomForEnemyPlane::init() {
     if (!Sprite::init()) {
         return false;
     }
-
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/fx/explosions.plist");
 
     modelCharac = Sprite::create("assets_game/enemies/Boom.png");
     modelCharac->setScale(SpriteController::updateSpriteScale(modelCharac, 0.07f));
@@ -46,12 +47,10 @@ void BoomForEnemyPlane::createPhysicsBody() {
     }
 
     auto physicsCache = PhysicsShapeCache::getInstance();
-    physicsCache->addShapesWithFile("physicsBody/BombForEnemyPlane2.plist");
-
     auto originalSize = modelCharac->getTexture()->getContentSize();
     auto scaledSize = this->GetSize();
 
-    auto physicsBody = physicsCache->createBody("BombForEnemyPlane2", originalSize, scaledSize);
+    auto physicsBody = physicsCache->createBodyFromPlist("physicsBody/BombForEnemyPlane.plist", "BombForEnemyPlane", originalSize, scaledSize);
     if (physicsBody) {
         physicsBody->setContactTestBitmask(true);
         physicsBody->setDynamic(false);
@@ -60,6 +59,7 @@ void BoomForEnemyPlane::createPhysicsBody() {
         this->setPhysicsBody(physicsBody);
     }
 }
+
 
 void BoomForEnemyPlane::reset() {
     modelCharac->setVisible(true);
@@ -101,38 +101,23 @@ void BoomForEnemyPlane::explode() {
     // Stop all actions to prevent further movement
     this->stopAllActions();
 
-    // Create explosion effect
+    // Remove physics body if it exists
     if (this->getPhysicsBody() != nullptr) {
         this->removeComponent(this->getPhysicsBody());
     }
 
-    if (!explosionSprite) {
-        explosionSprite = Sprite::createWithSpriteFrameName("explosions7.png");
-        explosionSprite->setScale(SpriteController::updateSpriteScale(explosionSprite, 0.078f));
-        explosionBatchNode->addChild(explosionSprite);
-    }
-
-    explosionSprite->setPosition(modelCharac->getPosition());
     modelCharac->setVisible(false);
-    explosionSprite->setVisible(true);
-
-    auto explosionAnimation = SpriteController::createAnimation("explosions", 10, 0.041f);
-    auto animate = Animate::create(explosionAnimation);
-
-    explosionSprite->runAction(Sequence::create(
-        animate,
-        CallFunc::create([this]() {
-            explosionSprite->setVisible(false);
-            this->returnToPool();
-            }),
-        nullptr
-    ));
+    SoundController::getInstance()->playSoundEffect(Constants::CityDamagedSFX);
+    // Create explosion effect
+    auto explosion = Explosion::create(this->getPosition(), [this]() {
+        this->returnToPool();
+        }); // Adjust the scale as needed
+    this->getParent()->addChild(explosion);
 }
-
 
 void BoomForEnemyPlane::returnToPool() {
     this->stopAllActions();
     this->removeFromParent();
     this->setVisible(false);
-    BoomForEnemyPlanePool::getInstance()->returnBoom(this);
+    BoomForEnemyPlanePool::getInstance()->returnObject(this);
 }

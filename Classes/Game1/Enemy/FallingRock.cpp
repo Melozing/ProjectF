@@ -1,6 +1,7 @@
 #include "FallingRock.h"
-#include "FallingRockPool.h"
+#include "Manager/ObjectPoolGame1.h"
 #include "Controller/SpriteController.h"
+#include "utils/PhysicsShapeCache.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -20,9 +21,7 @@ bool FallingRock::init() {
         return false;
     }
 
-    // Randomly select either ROCK or LANDMINE
-    _spriteType = (rand() % 2 == 0) ? SpriteType::ROCK : SpriteType::LANDMINE;
-
+    initSprite();
     return true;
 }
 
@@ -31,56 +30,62 @@ void FallingRock::reset() {
 }
 
 Size FallingRock::GetSize() {
-    return GetContentSizeSprite(_currentSprite);
+    return _currentSprite->getContentSize();
+}
+
+void FallingRock::initSprite() {
+    // Randomly select between two images
+    std::string spriteFrameName = (CCRANDOM_0_1() < 0.5f) ? "assets_game/enemies/FallingRock1.png" : "assets_game/enemies/FallingRock2.png";
+
+    // Create the sprite
+    _currentSprite = Sprite::create(spriteFrameName);
+    this->addChild(_currentSprite);
+
+    // Scale the sprite
+    _currentSprite->setScale(SpriteController::updateSpriteScale(_currentSprite, 0.13f));
+
+    // Create physics body
+    createPhysicsBody();
+}
+
+void FallingRock::createPhysicsBody() {
+    if (this->getPhysicsBody() != nullptr) {
+        this->removeComponent(this->getPhysicsBody());
+    }
+
+    auto physicsCache = PhysicsShapeCache::getInstance();
+    auto originalSize = _currentSprite->getTexture()->getContentSize();
+    auto scaledSize = this->GetSize();
+
+    // Determine the correct plist file and body name based on the current sprite
+    std::string plistFile, bodyName;
+    if (_currentSprite->getResourceName() == "assets_game/enemies/FallingRock1.png") {
+        plistFile = "physicsBody/FallingRock1.plist";
+        bodyName = "FallingRock1";
+    }
+    else {
+        plistFile = "physicsBody/FallingRock2.plist";
+        bodyName = "FallingRock2";
+    }
+
+    auto physicsBody = physicsCache->createBodyFromPlist(plistFile, bodyName, originalSize, scaledSize);
+    physicsCache->resizeBody(physicsBody, bodyName, originalSize, 0.125f);
+
+    if (physicsBody) {
+        physicsBody->setContactTestBitmask(true);
+        physicsBody->setCollisionBitmask(0x02);
+        this->setPhysicsBody(physicsBody);
+    }
 }
 
 void FallingRock::initAnimation() {
-    std::string spriteFrameName;
-
-    // Depending on the sprite type, set appropriate properties
-    if (_spriteType == SpriteType::ROCK) {
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/enemies/falling_rock.plist");
-        spriteFrameName = "falling_rock1.png";
-        _animationDelay = 0.07f; // Animation delay for rock
-
-        _spriteBatchNodeRock = SpriteBatchNode::create("assets_game/enemies/falling_rock.png");
-
-        if (_spriteBatchNodeRock->getParent() == nullptr) {
-            this->addChild(_spriteBatchNodeRock);
-        }
-
-        // Create the sprite and add it to the rock batch node
-        _currentSprite = Sprite::createWithSpriteFrameName(spriteFrameName);
-        _spriteBatchNodeRock->addChild(_currentSprite);
-    }
-    else {
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/enemies/landmine.plist");
-        spriteFrameName = "landmine1.png";
-        _animationDelay = 0.15f; // Animation delay for landmine
-
-        _spriteBatchNodeLandmine = SpriteBatchNode::create("assets_game/enemies/landmine.png");
-
-
-        if (_spriteBatchNodeLandmine->getParent() == nullptr) {
-            this->addChild(_spriteBatchNodeLandmine);
-        }
-
-        // Create the sprite and add it to the landmine batch node
-        _currentSprite = Sprite::createWithSpriteFrameName(spriteFrameName);
-        _spriteBatchNodeLandmine->addChild(_currentSprite);
-    }
-    _spriteScale = SpriteController::updateSpriteScale(_currentSprite, 0.13f); // Scale for rock
-    _currentSprite->setScale(_spriteScale);
-
-    // Create animation with the customized delay for rock or landmine
-    auto animateCharac = Animate::create(createAnimation((_spriteType == SpriteType::ROCK) ? "falling_rock" : "landmine", 4, _animationDelay));
-    _currentSprite->runAction(RepeatForever::create(animateCharac));
+    // No animation needed
 }
 
 void FallingRock::spawn(const Vec2& startPosition) {
     this->setPosition(startPosition);
     this->setVisible(true);
-    initAnimation();
+
     // Define target position off-screen at the bottom
     Vec2 endPosition = Vec2(startPosition.x, -SpriteController::calculateScreenRatio(Constants::FALLINGROCK_ITEMS_OFFSET));
 
@@ -102,7 +107,6 @@ void FallingRock::spawn(const Vec2& startPosition) {
 
 void FallingRock::returnToPool() {
     this->setVisible(false);
-    this->stopAllActions();
     this->removeFromParentAndCleanup(false);
-    FallingRockPool::getInstance()->returnEnemy(this);
+    FallingRockPool::getInstance()->returnObject(this);
 }

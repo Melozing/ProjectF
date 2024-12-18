@@ -26,6 +26,7 @@ void PlayerMovement::onKeyReleased(EventKeyboard::KeyCode keyCode)
 
 void PlayerMovement::update(float delta)
 {
+    if (!_enabled) return;
     if (_direction != Vec2::ZERO)
     {
         Vec2 newPosition = _player->getPosition() + _direction * _speed * delta;
@@ -64,4 +65,8 @@ void PlayerMovement::updateDirection()
     }
 
     _direction.normalize();
+}
+
+void PlayerMovement::setEnabled(bool enabled) {
+    _enabled = enabled;
 }

@@ -4,6 +4,13 @@
 
 class Constants {
 public:
+    // UI SOUND
+    static std::string currentSoundTrackPath;
+    const static std::string MainMenuTrackPath;
+    const static std::string ClickStartGameSFX;
+    const static std::string ButtonClickSFX;
+    const static std::string OpenPanel;
+
     // Constants for enemy scale
     static const float FLYING_BULLET_SPEED;
     static const float FALLINGROCK_START_Y;
@@ -23,7 +30,7 @@ public:
 	static const float ITEM_SCALE_FACTOR;
 	static const float ITEM_EFFECT_DURATION;
 	static const float ITEM_SIZE_RATIO;
-	//EFFECT_GAME1
+	// EFFECT_GAME1
     static const std::string EFFECT_EXPLOSION_NAME;
     static const float EFFECT_EXPLOSION_PADDING_SCREEN;
     static const float EFFECT_EXPLOSION_PADDING_PLAYER_AREA;
@@ -39,6 +46,10 @@ public:
     static const float RANDOMBOOM_RESTRICTEDHEIGHT;
     static const float RANDOMBOOM_RESTRICTEDWIDTH;
     static const float DISTANCE_ENEMY_FALLING;
+    // Game1 sound
+    static const std::string pathSoundTrackGame1;
+    static const float soundtrackGame1Duration;
+
     // Screen
     static const cocos2d::Size DESIGN_SIZE;
     static const std::string GAME1_SCENE_NAME;
@@ -46,8 +57,8 @@ public:
     static const std::string GAME3_SCENE_NAME;
     static const std::string MAINMENU_SCENE_NAME;
     //Game2
+    static const int Player_Health2;
     static const float TIME_TO_WIN;
-    static const std::string pathSoundTrackGame1;
     static const float BulletSpeed;
     static const float PlayerSpeed;
     static const float PlayerScale;
@@ -66,7 +77,8 @@ public:
     static const int BulletDamage2;
     static const float GrenadeSpeed;
     static const float GrenadeThrowDistance;
-
+	//Petard game 2
+	static const float PetardHealth;
     //bossgame2
     static const float BossScale;
     static const float BossSpeed;
@@ -88,9 +100,25 @@ public:
     static const float EnemyPlaneBulletGame3Speed; //Speed Enemy Plane 3
 	static const float EnemyPlaneBoomGame3Speed; //Speed Enemy Plane 1
 	static const float SpeedEnemyPlane_BOSS; //Speed Enemy Plane 1
-	
+	static float HealthEnemyPlaneBoss;
+	static float CurrentHealthEnemyPlaneBoss;
+	static const float BulletDamageGame3;
+	static int QuantityBulletPlayerGame3;
+	static const std::string PlayerGame3Name;
+	static const std::string UPDATE_BULLET_LABEL;
+    //game3 SFX
+    static const std::string BossHealthSFX;
+    static const std::string PlayerGame3ShootSFX;
+    static const std::string PlayerOutOfAmmoSFX;
+    static const std::string EnemyCrepExplodeSFX;
+    static const std::string CityDamagedSFX;
+
+    static const std::string pathSoundTrackGame3;
+    static const std::string pathSoundBossGame3Phase1;
+
 	//VictoryPanel
 	static const std::string VICTORY_SOUNDTRACK_PATH;
+
     //UI
     static const int ORDER_LAYER_CURSOR;
     static const int ORDER_LAYER_UI;
@@ -102,8 +130,18 @@ public:
     static const float PADDING_VERTICAL_BUTTONS_MAINMENU;
     static const float PADDING_VERTICAL_UI_PANEL;
     static const float PADDING_VERTICAL_UI_EXITBUTTON;
-    static const float PADDING_HORIZONTAL_UI_PANEL;
-    static const float PADDING_HORIZONTAL_UI_EXITBUTTON;
+    static const float PADDING_VERTICAL_UI_SLIDER;
+    static const float PADDING_VERTICAL_UI_SLIDER_PADDING;
+    static const float PADDING_VERTICAL_UI_SLIDER_SPACING;
+    static const float PADDING_HORIZONTAL_UI_PANEL_BUTTON;
+    static const float PADDING_HORIZONTAL_UI_EXIT_BUTTON;
+    static const float PADDING_HORIZONTAL_UI_SLIDER;
+    static const float PADDING_HORIZONTAL_UI_SLIDER_SPACING;
+    static const std::string FONT_GAME;
+
+    //UserDefault UI
+    static const std::string UD_musicVolume;
+    static const std::string UD_effectsVolume;
 };
 
 #endif // __CONSTANTS_H__

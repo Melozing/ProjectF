@@ -30,13 +30,22 @@ void CityCollisionArea::createPhysicsBody() {
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
-    auto physicsBody = PhysicsBody::createBox(Size(visibleSize.width, visibleSize.height / 6.5));
+    auto physicsBody = PhysicsBody::createBox(Size(visibleSize.width, visibleSize.height / 12.5));
 
     physicsBody->setContactTestBitmask(true);
     physicsBody->setDynamic(false);
     physicsBody->setGravityEnable(false);
+    physicsBody->setCategoryBitmask(0x01); // Set category bitmask if needed
+    physicsBody->setCollisionBitmask(0x01); // Set collision bitmask if needed
+    physicsBody->setContactTestBitmask(0x01); // Set contact test bitmask if needed
+    physicsBody->setTag(1); // Set tag if needed
+    auto shape = physicsBody->getFirstShape();
+    if (shape) {
+        shape->setSensor(true);
+    }
+
     this->setPhysicsBody(physicsBody);
 
     // Position the collision area at the bottom of the screen
-    this->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + (visibleSize.height / 6.5) / 2));
+    this->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + (visibleSize.height / 12.5) / 2));
 }

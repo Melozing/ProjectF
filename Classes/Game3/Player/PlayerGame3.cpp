@@ -1,8 +1,12 @@
 ﻿#include "PlayerGame3.h"
 #include "Constants/Constants.h"
+#include "Controller/SoundController.h"
 #include "utils/MathFunction.h"
 #include "Manager/PlayerMovementManager.h"
+#include "Manager/ObjectPoolGame3.h"
 #include "Controller/GameController.h"
+#include "Game3/Enemy/EnemyPlaneBoss.h"
+#include "utils/PhysicsShapeCache.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -13,7 +17,6 @@ PlayerGame3* PlayerGame3::createPlayerGame3()
     if (player && player->init())
     {
         player->autorelease();
-        player->initAnimation();
         return player;
     }
     CC_SAFE_DELETE(player);
@@ -31,14 +34,19 @@ bool PlayerGame3::init()
     setupTurret();
     setupEventListeners();
     setupManagers();
-
+    initAnimation();
     // Schedule update method
     this->scheduleUpdate();
 
     // Initialize shooting variables
     isMouseDown = false;
-    shootDelay = 0.3f;
+    shootDelay = 0.15f;
     timeSinceLastShot = 0.0f;
+    bulletCount = 1;
+
+    // Preload shoot sound effect
+    Constants::QuantityBulletPlayerGame3 = 100;
+
     return true;
 }
 
@@ -96,14 +104,13 @@ void PlayerGame3::setupManagers()
 
 void PlayerGame3::initAnimation()
 {
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/player/tank.plist");
-
     modelCharac = Sprite::createWithSpriteFrameName("tank_1.png");
     modelCharac->setScale(SpriteController::updateSpriteScale(modelCharac, Constants::PlayerScale3));
     this->addChild(modelCharac, Constants::ORDER_LAYER_PLAYER);
 
     auto animateCharac = Animate::create(createAnimation("tank_", 8, 0.07f));
     modelCharac->runAction(RepeatForever::create(animateCharac));
+    createPhysicsBody();
 }
 
 void PlayerGame3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
@@ -112,11 +119,6 @@ void PlayerGame3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
         || keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW || keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
     {
         playerMovement->onKeyPressed(keyCode);
-    }
-    else if (keyCode == EventKeyboard::KeyCode::KEY_SPACE)
-    {
-        isMouseDown = true;
-        shootBullet();
     }
 }
 
@@ -136,14 +138,7 @@ void PlayerGame3::onMouseDown(Event* event)
         return;
     }
 
-    EventMouse* e = (EventMouse*)event;
-    if (e->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
-    {
-        isMouseDown = true;
-        if (timeSinceLastShot >= shootDelay) {
-            shootBullet();
-        }
-    }
+    isMouseDown = true;
 }
 
 void PlayerGame3::onMouseUp(Event* event)
@@ -155,48 +150,68 @@ void PlayerGame3::onMouseUp(Event* event)
     }
 }
 
-void PlayerGame3::shootBullet()
-{
+void PlayerGame3::shootBullet(const Vec2& target) {
     if (GameController::getInstance()->isGameOver() || GameController::getInstance()->isPaused()) return;
 
-    if (timeSinceLastShot < shootDelay) {
-        return;
-    }
-
     Vec2 turretPosition = this->convertToWorldSpace(turretSprite->getPosition());
-    // Update the distance between the player and the mouse position
     if (!updateDistanceToMouse(turretPosition)) {
         return; // Do not shoot if the mouse is too close
     }
 
-    // Calculate the local position of the anchor point (0.5f, 1.0f) in the turret's coordinate system
-    Vec2 localAnchorPoint = Vec2(turretSprite->getContentSize().width * 0.5f, turretSprite->getContentSize().height * 1.0f);
+    if (timeSinceLastShot < shootDelay) return;
+    if (Constants::QuantityBulletPlayerGame3 < 1) {
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(Constants::UPDATE_BULLET_LABEL, &Constants::QuantityBulletPlayerGame3);
+        // Send notification to blink red
+        SoundController::getInstance()->playSoundEffect(Constants::PlayerOutOfAmmoSFX);
+        __NotificationCenter::getInstance()->postNotification("BlinkRedBadge", nullptr);
+        return;
+    }
+        
 
-    Vec2 turretWorldPos = turretSprite->convertToWorldSpace(localAnchorPoint);
-
-    // Calculate direction from turret to mouse position
-    Vec2 direction = _mousePos - turretWorldPos;
+    direction = target - this->getPosition();
     direction.normalize();
-
-    // Get bullet from pool and set its properties
-    Bullet* bullet = BulletPool::getInstance()->getBullet();
-    if (bullet) {
-        bullet->setPosition(turretWorldPos);
-        bullet->setDirection(direction);
-        bullet->setSpeed(Constants::BulletGame3Speed * 0.6f);
-        bullet->reset(); // Ensure the bullet is reset and active
-
-        if (bullet->getParent() == nullptr) {
-            this->getParent()->addChild(bullet, Constants::ORDER_LAYER_CHARACTER - 5);
-        }
-
-        timeSinceLastShot = 0.0f;
+    if (direction.y < 0) {
+        direction.y = 0;
     }
-    else {
-        CCLOG("Failed to get bullet from pool");
+
+    std::vector<float> angles;
+    if (bulletCount == 1) {
+        angles = { 0.0f };
     }
+    else if (bulletCount == 2) {
+        angles = { -7.5f, 7.5f };
+    }
+    else if (bulletCount == 3) {
+        angles = { -15.0f, 0.0f, 15.0f };
+    }
+
+    for (float angleOffset : angles) {
+        float angleInRadians = CC_DEGREES_TO_RADIANS(angleOffset);
+        Vec2 BulletTestDirection = Vec2(
+            direction.x * cos(angleInRadians) - direction.y * sin(angleInRadians),
+            direction.x * sin(angleInRadians) + direction.y * cos(angleInRadians)
+        );
+
+        auto BulletPlayerGame3 = BulletPoolPlayerGame3::getInstance()->getObject();
+        BulletPlayerGame3->setPosition(turretPosition);
+        BulletPlayerGame3->setDirection(BulletTestDirection);
+        BulletPlayerGame3->spawn();
+        this->getParent()->addChild(BulletPlayerGame3, Constants::ORDER_LAYER_PLAYER - 99);
+        Constants::QuantityBulletPlayerGame3 --;
+    }
+
+    SoundController::getInstance()->playSoundEffect(Constants::PlayerGame3ShootSFX);
+    timeSinceLastShot = 0.0f;
+
+    // Send notification about bullet count change
+    __NotificationCenter::getInstance()->postNotification("BulletCountChanged", nullptr);
 }
 
+void PlayerGame3::increaseBulletCount() {
+    if (bulletCount < 3) {
+        bulletCount++;
+    }
+}
 
 void PlayerGame3::onMouseMove(Event* event)
 {
@@ -234,17 +249,12 @@ void PlayerGame3::update(float delta)
 
     updateTurretRotation();
 
-    if (isMouseDown)
+    timeSinceLastShot += delta;
+
+    if (isMouseDown && timeSinceLastShot >= shootDelay)
     {
-        timeSinceLastShot += delta;
-        if (timeSinceLastShot >= shootDelay)
-        {
-            shootBullet();
-        }
-    }
-    else
-    {
-        timeSinceLastShot += delta;
+        shootBullet(_mousePos);
+        timeSinceLastShot = 0.0f;
     }
 }
 
@@ -263,6 +273,14 @@ void PlayerGame3::updateTurretRotation() {
 
         // Calculate the angle in degrees
         float angle = CC_RADIANS_TO_DEGREES(atan2(direction.y, direction.x));
+
+        // Limit the rotation angle to prevent the turret from pointing downwards
+        if (angle < 0.0f) {
+            return;
+        }
+        else if (angle > 180.0f) {
+            return;
+        }
 
         // Set the turret's rotation (adjusting for the initial orientation)
         turretSprite->setRotation(-angle + 90);
@@ -292,4 +310,28 @@ bool PlayerGame3::updateDistanceToMouse(const Vec2& position) {
         }
     }
     return false;
+}
+
+Size PlayerGame3::GetSize() {
+    return SpriteController::GetContentSizeSprite(modelCharac);
+}
+
+void PlayerGame3::createPhysicsBody() {
+    if (this->getPhysicsBody() != nullptr) {
+        this->removeComponent(this->getPhysicsBody());
+    }
+
+    auto physicsCache = PhysicsShapeCache::getInstance();
+    auto originalSize = modelCharac->getTexture()->getContentSize();
+    auto scaledSize = this->GetSize();
+
+    auto physicsBody = physicsCache->createBodyFromPlist("physicsBody/PlayerGame3.plist", "PlayerGame3", originalSize, scaledSize);
+    physicsCache->resizeBody(physicsBody, "PlayerGame3", originalSize, 0.9f);
+    if (physicsBody) {
+        physicsBody->setContactTestBitmask(true);
+        physicsBody->setDynamic(false);
+        physicsBody->setGravityEnable(false);
+
+        this->setPhysicsBody(physicsBody);
+    }
 }

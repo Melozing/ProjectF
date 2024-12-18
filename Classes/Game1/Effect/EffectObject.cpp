@@ -60,7 +60,7 @@ void EffectObject::playAnimation(const std::string& namePrefix, int frameCount, 
 
     if (!_effectSprite) {
         _effectSprite = Sprite::createWithSpriteFrameName(namePrefix + "1.png");
-        _effectSprite->setScale(SpriteController::updateSpriteScale(_effectSprite, 0.03f));
+        _effectSprite->setScale(SpriteController::updateSpriteScale(_effectSprite, 0.07f));
         _spriteBatchNode->addChild(_effectSprite);
     }
     else if (_effectSprite->getParent() == nullptr) {

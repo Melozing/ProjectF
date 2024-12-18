@@ -1,11 +1,14 @@
 #include "BulletForEnemyPlane.h"
-#include "BulletForEnemyPlanePool.h"
+#include "Manager/ObjectPoolGame3.h"
 #include "Controller/SpriteController.h"
+#include "Controller/SoundController.h"
+#include "Constants/Constants.h"
+#include "FX/Explodable.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
 
-BulletForEnemyPlane* BulletForEnemyPlane::createBullet() {
+BulletForEnemyPlane* BulletForEnemyPlane::create() {
     BulletForEnemyPlane* bullet = new (std::nothrow) BulletForEnemyPlane();
     if (bullet && bullet->init()) {
         bullet->autorelease();
@@ -19,8 +22,6 @@ bool BulletForEnemyPlane::init() {
     if (!Sprite::init()) {
         return false;
     }
-
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/fx/explosions.plist");
 
     modelCharac = Sprite::create("assets_game/enemies/BulletPlane.png");
     modelCharac->setScale(SpriteController::updateSpriteScale(modelCharac, 0.03f));
@@ -87,40 +88,35 @@ void BulletForEnemyPlane::moveDown(float angle) {
 }
 
 void BulletForEnemyPlane::explode() {
+    // Check if the bullet is still part of the scene
+    if (!this->getParent()) {
+        return;
+    }
+
     // Stop all actions to prevent further movement
     this->stopAllActions();
 
-    // Create explosion effect
+    // Remove physics body if it exists
     if (this->getPhysicsBody() != nullptr) {
         this->removeComponent(this->getPhysicsBody());
     }
 
-    if (!explosionSprite) {
-        explosionSprite = Sprite::createWithSpriteFrameName("explosions7.png");
-        explosionSprite->setScale(SpriteController::updateSpriteScale(explosionSprite, 0.078f));
-        explosionBatchNode->addChild(explosionSprite);
-    }
-
-    explosionSprite->setPosition(modelCharac->getPosition());
+    // Hide the model character
     modelCharac->setVisible(false);
-    explosionSprite->setVisible(true);
+    SoundController::getInstance()->playSoundEffect(Constants::EnemyCrepExplodeSFX);
 
-    auto explosionAnimation = SpriteController::createAnimation("explosions", 10, 0.041f);
-    auto animate = Animate::create(explosionAnimation);
-
-    explosionSprite->runAction(Sequence::create(
-        animate,
-        CallFunc::create([this]() {
-            explosionSprite->setVisible(false);
-            this->returnToPool();
-            }),
-        nullptr
-    ));
+    // Create explosion effect
+    auto explosion = Explosion::create(this->getPosition(), [this]() {
+        this->returnToPool();
+        });
+    this->getParent()->addChild(explosion);
 }
 
 void BulletForEnemyPlane::returnToPool() {
     this->stopAllActions();
-    this->removeFromParent();
+    this->unscheduleAllCallbacks();
     this->setVisible(false);
-    BulletForEnemyPlanePool::getInstance()->returnBullet(this);
+    this->removeFromParentAndCleanup(false);
+    this->reset();
+    BulletForEnemyPlanePool::getInstance()->returnObject(this);
 }

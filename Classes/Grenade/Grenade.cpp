@@ -93,7 +93,7 @@ void Grenade::explode()
 
 void Grenade::dealDamage()
 {
-    float damageRadius = 120.0f;
+    float damageRadius = 100.0f;
     auto damageCircle = DrawNode::create();
     damageCircle->drawSolidCircle(this->getPosition(), damageRadius, 0, 50, Color4F(1, 0, 0, 0.5f));
     this->getParent()->addChild(damageCircle);

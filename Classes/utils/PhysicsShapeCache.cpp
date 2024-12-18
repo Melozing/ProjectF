@@ -139,6 +139,9 @@ PhysicsBody* PhysicsShapeCache::createBody(const std::string& shapeName, const S
 
     // Apply the anchor point transformation
     physicsBody->setPositionOffset(Vec2(bodyData.anchorPoint.x * scaleX, bodyData.anchorPoint.y * scaleY));
+    physicsBody->setContactTestBitmask(true);
+    physicsBody->setDynamic(false);
+    physicsBody->setGravityEnable(false);
 
     return physicsBody;
 }
@@ -161,10 +164,12 @@ void PhysicsShapeCache::resizeBody(PhysicsBody* physicsBody, const std::string& 
 
     auto shapes = physicsBody->getShapes();
 
-    float scaleX = scaleFactor;
-    float scaleY = scaleFactor;
+    Size screenSize = Director::getInstance()->getVisibleSize();
 
-    CCLOG("Resizing: ScaleX = %f, ScaleY = %f", scaleX, scaleY);
+    float scaleX = (screenSize.width / originalSize.width) * scaleFactor;
+    float scaleY = (screenSize.height / originalSize.height) * scaleFactor;
+
+    float scale = std::min(scaleX, scaleY);
 
     for (auto shape : shapes) {
         physicsBody->removeShape(shape);
@@ -182,7 +187,7 @@ void PhysicsShapeCache::resizeBody(PhysicsBody* physicsBody, const std::string& 
         for (const auto& polygon : fixture.polygons) {
             std::vector<Vec2> scaledPolygon;
             for (const auto& point : polygon) {
-                scaledPolygon.push_back(Vec2(point.x * scaleX, point.y * scaleY));
+                scaledPolygon.push_back(Vec2(point.x * scale, point.y * scale));
             }
             auto shape = PhysicsShapePolygon::create(scaledPolygon.data(), scaledPolygon.size(), PHYSICSBODY_MATERIAL_DEFAULT);
             shape->setDensity(fixture.density);
@@ -193,5 +198,11 @@ void PhysicsShapeCache::resizeBody(PhysicsBody* physicsBody, const std::string& 
         }
     }
 
-    physicsBody->setPositionOffset(Vec2(bodyData.anchorPoint.x * scaleX, bodyData.anchorPoint.y * scaleY));
+    physicsBody->setPositionOffset(Vec2(bodyData.anchorPoint.x * scale, bodyData.anchorPoint.y * scale));
 }
+
+cocos2d::PhysicsBody* PhysicsShapeCache::createBodyFromPlist(const std::string& plist, const std::string& shapeName, const cocos2d::Size& originalSize, const cocos2d::Size& scaledSize) {
+    this->addShapesWithFile(plist);
+    return this->createBody(shapeName, originalSize, scaledSize);
+}
+

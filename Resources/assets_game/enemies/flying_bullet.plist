@@ -7,71 +7,43 @@
 			<key>flying_bullet1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{25,46},{20,7}}</string>
+				<string>{{0,111},{150,33}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{4,8},{20,7}}</string>
+				<string>{{0,0},{150,33}}</string>
 				<key>sourceSize</key>
-				<string>{32,24}</string>
+				<string>{150,33}</string>
 			</dict>
 
 			<key>flying_bullet2.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,46},{24,13}}</string>
+				<string>{{0,62},{150,48}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{2,5},{24,13}}</string>
+				<string>{{0,0},{150,48}}</string>
 				<key>sourceSize</key>
-				<string>{32,24}</string>
+				<string>{150,48}</string>
 			</dict>
 
 			<key>flying_bullet3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{32,13}}</string>
+				<string>{{0,0},{150,61}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,5},{32,13}}</string>
+				<string>{{0,0},{150,61}}</string>
 				<key>sourceSize</key>
-				<string>{32,24}</string>
-			</dict>
-
-			<key>flying_bullet4.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{0,14},{32,13}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,5},{32,13}}</string>
-				<key>sourceSize</key>
-				<string>{32,24}</string>
-			</dict>
-
-			<key>flying_bullet5.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{0,28},{30,17}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false/>
-				<key>sourceColorRect</key>
-				<string>{{0,2},{30,17}}</string>
-				<key>sourceSize</key>
-				<string>{32,24}</string>
+				<string>{150,61}</string>
 			</dict>
 
 		</dict>
@@ -81,7 +53,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{64,64}</string>
+			<string>{151,145}</string>
 			<key>textureFileName</key>
 			<string>flying_bullet.png</string>
 			</dict>

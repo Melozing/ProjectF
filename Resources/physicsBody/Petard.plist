@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<!-- created with http://www.physicseditor.de -->
+
+<plist version="1.0">
+	<dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>1</integer>
+            <key>ptm_ratio</key>
+            <real>2</real>
+        </dict>
+        <key>bodies</key>
+		<dict>
+
+			<key>petard</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+					<dict>
+						<key>density</key>
+						<real>2</real>
+						<key>friction</key>
+						<real>0</real>
+                        <key>restitution</key>
+                        <real>0</real>
+						<key>filter_categoryBits</key>
+						<integer>1</integer>
+						<key>filter_groupIndex</key>
+						<integer>0</integer>
+						<key>filter_maskBits</key>
+						<integer>65535</integer>
+						<key>fixture_type</key>
+                        <string>POLYGON</string>
+                        <key>isSensor</key>
+
+						<false/>
+
+						<key>polygons</key>
+						<array>
+
+							<array>
+	
+								<string>{ -14.129,38.520 }</string>
+	
+								<string>{ -18.906,21.604 }</string>
+	
+								<string>{ -20.406,15.104 }</string>
+	
+								<string>{ -0.594,-6.520 }</string>
+	
+								<string>{ 16.094,23.604 }</string>
+	
+								<string>{ 13.168,38.510 }</string>
+
+							</array>
+
+							<array>
+	
+								<string>{ -6.406,-40.896 }</string>
+	
+								<string>{ -0.594,-6.520 }</string>
+	
+								<string>{ -20.406,15.104 }</string>
+
+							</array>
+
+							<array>
+	
+								<string>{ 4.812,-40.886 }</string>
+	
+								<string>{ 22.470,28.000 }</string>
+	
+								<string>{ 16.094,23.604 }</string>
+	
+								<string>{ -0.594,-6.520 }</string>
+
+							</array>
+
+							<array>
+	
+								<string>{ -21.406,28.292 }</string>
+	
+								<string>{ -20.406,15.104 }</string>
+	
+								<string>{ -18.906,21.604 }</string>
+
+							</array>
+
+						</array>
+					</dict>
+
+				</array>
+			</dict>
+
+		</dict>
+	</dict>
+</plist>
+

@@ -10,6 +10,10 @@ public:
     void updateHealthSprites(int health);
 private:
     std::vector<cocos2d::Sprite*> _healthSprites;
+    std::vector<cocos2d::Sprite*> _backgroundSprites;
+    cocos2d::Sprite* modelHealth;
+    cocos2d::Sprite* modelBackground;
+    void positionHealthSprites();
 };
 
 #endif // __HEALTHPLAYERGAME1_H__

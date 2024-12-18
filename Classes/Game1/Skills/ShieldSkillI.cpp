@@ -1,5 +1,5 @@
 #include "Game1/Skills/ShieldSkill.h"
-#include "ShieldSkillItemPool.h"
+#include "Manager/ObjectPoolGame1.h"
 
 USING_NS_CC;
 
@@ -17,7 +17,6 @@ bool ShieldSkill::init() {
     if (!Sprite::init()) {
         return false;
     }
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/player/shield.plist");
     _spriteBatchNode = SpriteBatchNode::create("assets_game/player/shield.png");
     _isActive = false;
     this->setVisible(true);
@@ -62,7 +61,7 @@ void ShieldSkill::deactivate() {
     if (_isActive) {
         _isActive = false;
         this->removeFromParentAndCleanup(false);
-        ShieldSkillItemPool::getInstance()->returnItem(this);
+        ShieldSkillPool::getInstance()->returnObject(this);
     }
 }
 

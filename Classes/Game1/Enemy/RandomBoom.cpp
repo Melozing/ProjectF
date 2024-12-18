@@ -1,5 +1,5 @@
 #include "RandomBoom.h"
-#include "RandomBoomPool.h"
+#include "Manager/ObjectPoolGame1.h"
 #include "utils/PhysicsShapeCache.h"
 #include "Constants/Constants.h"
 #include "cocos2d.h"
@@ -10,11 +10,6 @@ bool RandomBoom::init() {
     if (!Node::init()) {
         return false;
     }
-
-    // Load sprite frames
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/enemies/warning_rocket.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/enemies/rocket.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("assets_game/fx/explosions.plist");
 
     // Create sprite batch nodes
     _spriteBatchNodeWarning = SpriteBatchNode::create("assets_game/enemies/warning_rocket.png");
@@ -77,7 +72,7 @@ void RandomBoom::showWarning(const Vec2& position) {
     _warningSprite->setPosition(position);
     _warningSprite->setVisible(true);
 
-    auto warningAnimation = createAnimation("warning_rocket", 4, 0.15f);
+    auto warningAnimation = createAnimation("warning_rocket", 50, 0.01f);
     if (warningAnimation) {
         auto animateWarning = Animate::create(warningAnimation);
         _warningSprite->runAction(RepeatForever::create(animateWarning));
@@ -87,7 +82,7 @@ void RandomBoom::showWarning(const Vec2& position) {
 void RandomBoom::launchMissile(const Vec2& targetPosition) {
     if (!_missileSprite) {
         _missileSprite = Sprite::createWithSpriteFrameName("rocket1.png");
-        _missileSprite->setScale(SpriteController::updateSpriteScale(_missileSprite, 0.15f));
+        _missileSprite->setScale(SpriteController::updateSpriteScale(_missileSprite, 0.25f));
         _spriteBatchNodeMissile->addChild(_missileSprite);
     }
 
@@ -100,6 +95,13 @@ void RandomBoom::launchMissile(const Vec2& targetPosition) {
     float angle = CC_RADIANS_TO_DEGREES(atan2(direction.y, direction.x));
     _missileSprite->setRotation(-angle - 90);
 
+    // Create rocket animation
+    auto rocketAnimation = createAnimation("rocket", 11, 0.017f);
+    if (rocketAnimation) {
+        auto animateRocket = Animate::create(rocketAnimation);
+        _missileSprite->runAction(RepeatForever::create(animateRocket));
+    }
+
     float missileSpeed = 0.6f;
     auto moveToTarget = MoveTo::create(missileSpeed, targetPosition);
     auto hitTargetCallback = CallFunc::create([this]() {
@@ -108,6 +110,7 @@ void RandomBoom::launchMissile(const Vec2& targetPosition) {
 
     _missileSprite->runAction(Sequence::create(moveToTarget, hitTargetCallback, nullptr));
 }
+
 
 Size RandomBoom::GetSize() {
     return GetContentSizeSprite(_warningSprite);
@@ -133,7 +136,7 @@ void RandomBoom::onMissileHitTarget() {
     if (!explosionSprite) {
         explosionSprite = Sprite::createWithSpriteFrameName("explosions7.png");
         explosionSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
-        explosionSprite->setScale(SpriteController::updateSpriteScale(explosionSprite, 0.078f));
+        explosionSprite->setScale(SpriteController::updateSpriteScale(explosionSprite, 0.09f));
         explosionSprite->setPosition(position);
         _spriteBatchNodeExplosion->addChild(explosionSprite);
     }
@@ -156,7 +159,7 @@ void RandomBoom::onMissileHitTarget() {
     auto scaledSize = this->GetSize();
 
     explosionBody = physicsCache->createBody("RandomBoomExplosionGame1", originalSize, scaledSize);
-    physicsCache->resizeBody(explosionBody, "RandomBoomExplosionGame1", originalSize, 0.9f);
+    physicsCache->resizeBody(explosionBody, "RandomBoomExplosionGame1", originalSize, 1.0f);
     if (explosionBody) {
         explosionBody->setCollisionBitmask(0x02); // Unique bitmask for missiles
         explosionBody->setContactTestBitmask(true);
@@ -178,21 +181,12 @@ void RandomBoom::onMissileHitTarget() {
         CallFunc::create([this]() {
             this->stopAllActions();
             this->removeFromParentAndCleanup(false);
-            RandomBoomPool::getInstance()->returnEnemy(this);
+            RandomBoomPool::getInstance()->returnObject(this);
             }),
         nullptr
     ));
 }
 
 RandomBoom::~RandomBoom() {
-    // Check if the sprite frames are still being used before removing them from cache
-    if (SpriteFrameCache::getInstance()->isSpriteFramesWithFileLoaded("assets_game/enemies/warning_rocket.plist")) {
-        SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("assets_game/enemies/warning_rocket.plist");
-    }
-    if (SpriteFrameCache::getInstance()->isSpriteFramesWithFileLoaded("assets_game/enemies/rocket.plist")) {
-        SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("assets_game/enemies/rocket.plist");
-    }
-    if (SpriteFrameCache::getInstance()->isSpriteFramesWithFileLoaded("assets_game/fx/explosions.plist")) {
-        SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("assets_game/fx/explosions.plist");
-    }
+
 }

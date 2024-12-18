@@ -1,6 +1,8 @@
 #include "EnemyBase.h"
 #include "Game2/Player/PlayerGame2.h"
 #include "Game2/Enemy/EnemyUtils.h"
+
+#include "Game2/Items/ItemsSpawn.h"
 USING_NS_CC;
 
 EnemyBase::EnemyBase()
@@ -34,13 +36,23 @@ void EnemyBase::update(float delta)
     moveToPlayer();
 }
 
+
+
 void EnemyBase::die() {
     _isDead = true;
     auto animateCharac = Animate::create(createDeathAnimation());
     this->runAction(Sequence::create(animateCharac, CallFunc::create([this]() {
+        // Item spawn logic
+        float spawnProbability = 0.5f; // 50% chance to spawn an item
+        if (cocos2d::RandomHelper::random_real(0.0f, 1.0f) < spawnProbability) {
+            auto itemType = static_cast<ItemsSpawn::ItemType>(cocos2d::RandomHelper::random_int(0, 2)); // Random item type
+            auto item = ItemsSpawn::create(itemType, this->getPosition());
+            this->getParent()->addChild(item);
+        }
         this->removeFromParent();
         }), nullptr));
 }
+
 
 void EnemyBase::attack() {
     _isAttacking = true;
@@ -132,6 +144,9 @@ void EnemyBase::createPhysicsBody() {
     physicsBody->setContactTestBitmask(true);
     physicsBody->setDynamic(false);
     physicsBody->setGravityEnable(false);
+    physicsBody->setCategoryBitmask(0x02);
+    physicsBody->setCollisionBitmask(0x01);
+	physicsBody->setContactTestBitmask(0x01);
     this->addComponent(physicsBody);
 }
 
